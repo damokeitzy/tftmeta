@@ -1,0 +1,415 @@
+{
+ "_about": "Comps you add yourself. Merged into comps.json at load; the importers never touch this file.",
+ "comps": [
+  {
+   "name": "Defender Diana Reroll — Defender Emblem",
+   "tier": "B",
+   "source": "your game, 2026-10-18 (1st place); positions from Kha'Zix Reroll",
+   "custom": true,
+   "needs": "Defender Emblem on Diana",
+   "units": [
+    "Diana",
+    "Kha'Zix",
+    "Hecarim",
+    "Ornn",
+    "Fiddlesticks",
+    "Ezreal",
+    "Aphelios",
+    "Soraka"
+   ],
+   "board": [
+    {
+     "unit": "Kha'Zix",
+     "pos": 2,
+     "three": true,
+     "items": [
+      "Rabadon's Deathcap",
+      "Edge of Night",
+      "Hand Of Justice"
+     ],
+     "prop": false,
+     "icon": "DA_18_KhaZix.png"
+    },
+    {
+     "unit": "Hecarim",
+     "pos": 3,
+     "three": true,
+     "items": [
+      "Gargoyle Stoneplate",
+      "Protector's Vow",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_18_Hecarim.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 9,
+     "three": true,
+     "items": [
+      "Defender Emblem",
+      "Jeweled Gauntlet",
+      "Hand Of Justice"
+     ],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Ornn",
+     "pos": 15,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Ornn.png"
+    },
+    {
+     "unit": "Fiddlesticks",
+     "pos": 16,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Fiddlesticks18.png"
+    },
+    {
+     "unit": "Ezreal",
+     "pos": 22,
+     "three": false,
+     "items": [
+      "Red Buff",
+      "Spear of Shojin",
+      "Last Whisper"
+     ],
+     "prop": false,
+     "icon": "DA_18_Ezreal.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 23,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    },
+    {
+     "unit": "Soraka",
+     "pos": 24,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Soraka.png"
+    },
+    {
+     "unit": "Stonebark Tree",
+     "pos": 27,
+     "three": false,
+     "items": [],
+     "prop": true,
+     "icon": null
+    },
+    {
+     "unit": "Lifebloom",
+     "pos": 28,
+     "three": false,
+     "items": [],
+     "prop": true,
+     "icon": null
+    }
+   ],
+   "carries": {
+    "Diana": [
+     "Defender Emblem",
+     "Jeweled Gauntlet",
+     "Hand Of Justice"
+    ],
+    "Kha'Zix": [
+     "Rabadon's Deathcap",
+     "Edge of Night",
+     "Hand Of Justice"
+    ],
+    "Ezreal": [
+     "Red Buff",
+     "Spear of Shojin",
+     "Last Whisper"
+    ],
+    "Hecarim": [
+     "Gargoyle Stoneplate",
+     "Protector's Vow",
+     "Warmog's Armor"
+    ]
+   },
+   "augments": [
+    "Silver: Team Building, Latent Forge, Rolling For Days",
+    "Gold: Replication",
+    "Prismatic: Deadlier Caps, Buried Treasures III"
+   ],
+   "notes": "Key comp this meta: Kha'Zix reaches the backline and kills the one carry that 1-cost 2★ rageblade boards depend on. Diana, Kha'Zix and Fiddlesticks 3★. Only works with the Defender Emblem on Diana: take it from carousel / armory / an emblem augment. Without it, play Kha'Zix Reroll.",
+   "plan": {
+    "style": "Reroll (3-cost carry)",
+    "roll_at": "Level 7",
+    "when": "Level to 7 around 3-5 / 4-1, then slow roll the gold above 50. If you have to roll early to stabilise, roll at 6 for the 2-cost pieces only — then rebuild gold and get to 7 before rolling for 3-costs (3-cost odds at 6 are only 25%).",
+    "bail": "Switch if 2+ opponents hold your carry, or you're under ~30 HP at 4-1 without a 2★ carry.",
+    "realistic": "Realistic target: Diana, Kha'Zix and Fiddlesticks 3★ at level 7-8, Diana with the Defender Emblem; Hecarim full tank items.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 4"
+     ],
+     [
+      "2-5",
+      "Lv 5"
+     ],
+     [
+      "3-2",
+      "Lv 6"
+     ],
+     [
+      "3-5 / 4-1",
+      "Lv 7 · slow roll above 50g"
+     ],
+     [
+      "5-1",
+      "Lv 8"
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Nidalee Flex (yours) — Standard",
+   "tier": "B",
+   "custom": true,
+   "source": "your 1st place, Normal, 2026-10-21 (40:49, out to 7-1): board and items from tactics.tools, 3★ from your end screen. Positions are a guess (tanks front, Nidalee melee, ranged carries back). Opener and stage advice from TFT Academy's Aphelios Nidalee and bunnymuffins' Aphelios Flex.",
+   "units": [
+    "Vi",
+    "Amumu",
+    "Sentinel",
+    "Diana",
+    "Nidalee",
+    "Varus",
+    "Kog'Maw",
+    "Aphelios"
+   ],
+   "board": [
+    {
+     "unit": "Vi",
+     "pos": 2,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Vi18.png"
+    },
+    {
+     "unit": "Amumu",
+     "pos": 3,
+     "three": false,
+     "items": [
+      "Gargoyle Stoneplate",
+      "Warmog's Armor",
+      "Crownguard"
+     ],
+     "prop": false,
+     "icon": "DA_Amumu18.png"
+    },
+    {
+     "unit": "Sentinel",
+     "pos": 4,
+     "three": false,
+     "items": [
+      "Ionic Spark",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_Sentinel18.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 5,
+     "three": true,
+     "items": [
+      "Void Staff"
+     ],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Nidalee",
+     "pos": 6,
+     "three": true,
+     "items": [
+      "Spear of Shojin",
+      "Striker's Flail",
+      "Edge of Night"
+     ],
+     "prop": false,
+     "icon": "DA_Nidalee18_AP.png"
+    },
+    {
+     "unit": "Varus",
+     "pos": 23,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Varus.png"
+    },
+    {
+     "unit": "Kog'Maw",
+     "pos": 24,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_KogMaw18_AD.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 26,
+     "three": false,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Deathblade",
+      "Kraken's Fury"
+     ],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    }
+   ],
+   "carries": {
+    "Nidalee": [
+     "Spear of Shojin",
+     "Striker's Flail",
+     "Edge of Night"
+    ],
+    "Aphelios": [
+     "Guinsoo's Rageblade",
+     "Deathblade",
+     "Kraken's Fury"
+    ],
+    "Amumu": [
+     "Gargoyle Stoneplate",
+     "Warmog's Armor",
+     "Crownguard"
+    ],
+    "Sentinel": [
+     "Ionic Spark",
+     "Sunfire Cape"
+    ],
+    "Diana": [
+     "Void Staff"
+    ]
+   },
+   "augments": [
+    "Best (your win): Commerce Core, Trade Sector, Trade Sector+ (free rerolls), Explosive Growth, Explosive Growth+ (XP to 8), Birthday Reunion"
+   ],
+   "notes": "Your comeback: 19 HP at 4-7, then no HP lost for 14 rounds to 1st. 3★ Nidalee one-shots the backline (Shojin, Striker's, Edge of Night), 3★ Diana and Varus, Aphelios as the second carry (Guinsoo's, Deathblade, Kraken's), Amumu and Sentinel tank. SeeMeta had Lunar Nidalee at 57.7% top 4 on 18.4. Your game's early board was different: Varus, Ornn, Rakan, Yorick, Rammus (stage 2), Diana and Kog'Maw from 4-1; Nidalee and Aphelios only came at level 8 (5-1). It was touch and go: 91 HP at 3-1 down to 19 by 4-7 while you transitioned, so play the strongest board you have until 8 and save HP for the switch.",
+   "special_items_optional": true,
+   "plan": {
+    "style": "Level 8 / 4-cost carries",
+    "roll_at": "Level 8",
+    "when": "Econ to 50 and level 8 around 4-1 / 4-2, then roll down for the 4-cost carries. Upgrade to 5-costs at 9 if you're healthy.",
+    "bail": "Switch if you can't find the carries by your roll-down, or the lobby is heavily contested.",
+    "realistic": "Realistic target: 2★ 4-cost carries with full items at level 8. 5-costs and 3★ 4-costs are upside.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 4"
+     ],
+     [
+      "2-5",
+      "Lv 5"
+     ],
+     [
+      "3-2",
+      "Lv 6"
+     ],
+     [
+      "3-5",
+      "Lv 7"
+     ],
+     [
+      "4-1 / 4-2",
+      "Lv 8 · roll down"
+     ],
+     [
+      "5-1",
+      "Lv 9 if healthy"
+     ]
+    ]
+   },
+   "early": [
+    {
+     "unit": "Akali",
+     "items": [
+      "Sterak's Gage",
+      "Infinity Edge",
+      "Guinsoo's Rageblade"
+     ]
+    },
+    {
+     "unit": "Camille",
+     "items": []
+    },
+    {
+     "unit": "Leona",
+     "items": []
+    },
+    {
+     "unit": "Shen",
+     "items": []
+    }
+   ],
+   "howto": {
+    "gameplan": "Same final board as TFT Academy's A-tier Aphelios Nidalee. Win-streak with an AD / attack speed opener (Akali holding the items), then level 8 and roll for the 4-costs. Aphelios is the gameplan when you have a good AD opener but can't quite bridge the gap to level 9 and play for Draven. He is a great AD default and uses most items decently. Nidalee is the best duo carry but Brambleback can work, specially if you have a Rapidfire Emblem.",
+    "stages": [
+     [
+      "Stage 1-2",
+      "Play a strong opener around any AD or Attack Speed slam. Guinsoo's isn't BIS but it is strong early game and more than serviceable."
+     ],
+     [
+      "Stage 3",
+      "Continue to be strong around an AD holder with Aphelios or Nidalee items. If you are heavily loss streaking prepare to roll down on 4-1 to try to hit Sentinel and Nidalee before the rest of the lobby."
+     ],
+     [
+      "Stage 4",
+      "Roll down for Aphelios, Sentinel and Nidalee. Flex the front line if the lobby is heavily contesting Sentinel. Nidalee can stabilize bad spots extremely well so prioritize her itemization if you are playing from low HP."
+     ],
+     [
+      "Stage 5+",
+      "Don't level to 9 until you've 2 starred Aphelios and Brambleback. Go 9 for Alune or a Lux."
+     ]
+    ],
+    "tips": [
+     "Position Nidalee on weak side to get a quick kill then jump backline. Amumu or Sentinel 2 can be your main tank (you're often contested so prioritize whichever gets upgraded). Kogmaw Provides Free Shred + Sunder.",
+     "Open with a strong win streak AD tempo around Rapidfires. BIS is somewhat fake in this comp so slam aggressively to win.",
+     "Comp can use many items so take item augment if you don't have one yet. Mama Beak can be a strong carry here if you have Riftbeasts online."
+    ],
+    "holders": "Akali (opener), Cinderling, Xayah, Camille",
+    "emblem": "",
+    "items": [
+     [
+      "Nidalee",
+      "Spear of Shojin, Striker's Flail, Edge of Night",
+      []
+     ],
+     [
+      "Aphelios",
+      "Guinsoo's Rageblade, Deathblade, Kraken's Fury",
+      []
+     ],
+     [
+      "Amumu",
+      "Gargoyle Stoneplate, Warmog's Armor, Crownguard",
+      []
+     ],
+     [
+      "Sentinel",
+      "Ionic Spark, Sunfire Cape",
+      []
+     ],
+     [
+      "Diana",
+      "Void Staff",
+      []
+     ]
+    ]
+   }
+  }
+ ]
+}

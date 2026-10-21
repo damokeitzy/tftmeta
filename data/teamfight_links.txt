@@ -1,0 +1,2 @@
+# One teamfight.lol team-builder link per line, then run: py tools/import_teamfight.py
+# (or: py tools/import_teamfight.py --bunnymuffins  to take every comp from bunnymuffins.lol/meta)

@@ -1,0 +1,41 @@
+{
+ "_about": "Per-comp overrides by base name (before ' — '). max_tier caps the tier (data tiers can't see emblem/augment/artifact dependence); needs is shown on the comp card; must adds must-have items per carry (an asterisk in the item builds).",
+ "Veigar Reroll": {
+  "max_tier": "B",
+  "needs": "Consuming Flora emblem; lots of contested 1–2 costs"
+ },
+ "Solar Yunara": {
+  "max_tier": "B",
+  "needs": "emblems + item augments; Yunara lacks carry DPS without them"
+ },
+ "Solar Akali Reroll": {
+  "max_tier": "B",
+  "needs": "an artifact or reroll augment"
+ },
+ "Tristana Rengar Reroll": {
+  "max_tier": "B",
+  "needs": "an emblem and an early Rengar"
+ },
+ "Ashe Fast 9": {
+  "max_tier": "B",
+  "needs": "Shojin on Ashe and level 9"
+ },
+ "Draven Fast 9": {
+  "needs": "Guinsoo's on Draven and level 9"
+ },
+ "Elderwood Veigar": {
+  "max_tier": "B",
+  "note": "Your read: weak early, and Ornn is a poor tank, so it gets smashed unless you have its pieces (artifacts, emblems or Consuming Flora)."
+ },
+ "Kha'Zix Reroll": {
+  "note": "Key comp this meta: Kha'Zix reaches the backline and kills the one carry that 1-cost 2★ rageblade boards depend on. Only works if you find Kha'Zix."
+ },
+ "Azir Rammus Reroll": {
+  "must": {
+   "Azir": [
+    "Guinsoo's"
+   ]
+  },
+  "note": "Your read: Guinsoo's is a must-have on Azir (bunnymuffins only marks Gunblade)."
+ }
+}

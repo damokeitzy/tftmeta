@@ -1,0 +1,31 @@
+# --- your own play data (stays on this PC) ---
+config.json
+data/games/
+data/shop_log/
+data/overlay_errors.log
+tests/fixtures/
+
+# --- Riot's game data and icons: downloaded from Community Dragon at startup (tools/update_game_data.py) ---
+data/cdragon_tft*.json
+data/game_data_version.json
+data/set.json
+data/items.json
+data/item_names.json
+data/augments.json
+data/augment_names.json
+data/augment_icons.json
+data/champ_icons/
+data/augment_icons/
+data/trait_icons/
+data/icons/
+
+# --- other people's guides and stats: synced at startup (tools/import_*.py) ---
+data/comps.json
+data/comps.backup.json
+data/comps_tftacademy.json
+data/seemeta.json
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.tmp
