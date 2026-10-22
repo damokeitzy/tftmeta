@@ -4,11 +4,12 @@ build, the round you went out on, HP / level by stage, what you bought.
   py tools/game_history.py        the last 10 games
   py tools/game_history.py 30     the last 30
 """
+import os
 import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 GAMES = ROOT / "data" / "games"
 
 

@@ -11,6 +11,7 @@ bunnymuffins already covers the lower tiers, and more B reroll builds would crow
 picks again. A build that is the same as a bunnymuffins one isn't shown twice: gamedata.load_comps keeps
 whichever guide rates it higher.
 """
+import os
 import json
 import re
 import sys
@@ -18,7 +19,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 sys.path.insert(0, str(ROOT))
 from tft_overlay.plans import make_plan  # noqa: E402
 

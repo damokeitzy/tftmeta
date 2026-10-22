@@ -4,12 +4,13 @@ Usage: py tools/extract_set.py [SET_MUTATOR]   (default TFTSet18)
 Re-download the dump first when a new set/patch lands:
   curl -o data/cdragon_tft.json https://raw.communitydragon.org/latest/cdragon/tft/en_us.json
 """
+import os
 import json
 import sys
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 CDN = "https://raw.communitydragon.org/latest/game/"
 mutator = sys.argv[1] if len(sys.argv) > 1 else "TFTSet18"
 

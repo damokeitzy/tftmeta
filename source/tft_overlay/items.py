@@ -10,7 +10,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-DATA = Path(__file__).resolve().parent.parent / "data"
+from .paths import DATA  # noqa: E402
 
 BENCH_X0, BENCH_Y0, BENCH_STEP, BENCH_SIZE, BENCH_SLOTS = 0.0093, 0.2407, 0.050, 0.0417, 10
 UNIT_ICON = 0.0232          # item icon edge under a health bar

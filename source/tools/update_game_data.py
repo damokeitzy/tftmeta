@@ -12,6 +12,7 @@ Community Dragon publishes a patch's game files a few hours after it goes live; 
 request (content-metadata.json) per start. The version done last is in data/game_data_version.json; the
 previous dump is kept as data/cdragon_tft.prev.json.
 """
+import os
 import json
 import re
 import subprocess
@@ -20,7 +21,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 DATA = ROOT / "data"
 CDN = "https://raw.communitydragon.org/latest/"
 UA = {"User-Agent": "Mozilla/5.0"}

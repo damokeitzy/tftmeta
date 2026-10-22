@@ -2,7 +2,7 @@ import json
 import re
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent.parent / "data"
+from .paths import DATA  # noqa: E402  (source folder, or next to TFTMeta.exe)
 
 
 def load_set():

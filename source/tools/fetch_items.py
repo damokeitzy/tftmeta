@@ -5,11 +5,12 @@ data/cdragon_tft.json for a new patch.
 - data/special.json: set artifacts etc. offered in the armory ({name: icon file})
 - data/item_names.json: every offerable item name, for OCR matching of armory cards
 """
+import os
 import json
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 ICONS = ROOT / "data" / "icons"
 CDN = "https://raw.communitydragon.org/latest/game/"
 

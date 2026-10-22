@@ -18,7 +18,7 @@ import numpy as np
 from .hud import LAYOUTS, dx, set_dx, shift
 from .reader import crop
 
-ROOT = Path(__file__).resolve().parent.parent
+from .paths import ROOT  # noqa: E402
 LOG_DIR = ROOT / "data" / "shop_log"
 
 # fractions of the game frame (measured at 1920x1080)

@@ -18,6 +18,7 @@ builds. Requests are throttled and progress is saved after every comp, so a rate
 just means: run it again later and it carries on.
 """
 import html as htmllib
+import os
 import json
 import re
 import sys
@@ -26,7 +27,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 sys.path.insert(0, str(ROOT))
 from tft_overlay.plans import make_plan  # noqa: E402
 

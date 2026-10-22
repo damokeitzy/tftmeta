@@ -12,12 +12,13 @@ them *rarer*), and how often the same unit repeats in back-to-back shops.
 1% of the time. Small samples can't show much — expect a few hundred slots per bracket before
 the numbers mean anything.
 """
+import os
 import json
 import math
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 
 
 TABLE = json.loads((ROOT / "data" / "shop_odds.json").read_text(encoding="utf8"))

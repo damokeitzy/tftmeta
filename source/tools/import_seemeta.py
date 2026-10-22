@@ -11,6 +11,7 @@ build only shows as S or A when it actually finishes top 4 that often. A build S
 emblem builds) has no proof and shows at most B.
 """
 import html as htmllib
+import os
 import json
 import re
 import sys
@@ -18,7 +19,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 URL = "https://seemeta.com/en/tft/set-18/tier-list"
 
 
@@ -46,7 +47,21 @@ def fetch():
     return comps, (period.group(1) if period else None)
 
 
+RECHECK_H = 12  # SeeMeta's numbers move slowly: one check per 12 hours, not one per overlay start
+
+
 def main():
+    path = ROOT / "data" / "seemeta.json"
+    if "--sync" in sys.argv and "--force" not in sys.argv and path.exists():
+        saved = json.loads(path.read_text(encoding="utf8"))
+        try:
+            age_h = (time.time() - time.mktime(time.strptime(saved.get("_synced", ""), "%Y-%m-%d %H:%M"))) / 3600
+        except ValueError:
+            age_h = RECHECK_H
+        if age_h < RECHECK_H:
+            print("SYNC " + json.dumps({"added": [], "changed": [], "removed": [], "failed": 0,
+                                        "total": len(saved.get("comps") or [])}), flush=True)
+            return
     comps, period = fetch()
     for c in sorted(comps, key=lambda c: -c["top4"]):
         print(f"top4 {c['top4']:4.1f}%  avg {c['avg']:.2f}  {c['name']}", flush=True)
@@ -54,7 +69,6 @@ def main():
         raise SystemExit("Couldn't read SeeMeta's tier list (page layout changed?)")
     if "--sync" not in sys.argv:
         return
-    path = ROOT / "data" / "seemeta.json"
     before = {c["name"]: c for c in json.loads(path.read_text(encoding="utf8"))["comps"]} if path.exists() else {}
     after = {c["name"]: c for c in comps}
     store = {"_source": URL, "_period": period, "_synced": time.strftime("%Y-%m-%d %H:%M"), "comps": comps}

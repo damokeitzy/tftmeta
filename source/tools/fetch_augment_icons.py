@@ -5,12 +5,13 @@ little box above the lamp on the left of your board (tft_overlay/augment_lamp.py
 
 -> data/augment_icons/<api>.png and data/augment_icons.json ({augment name: icon file}).
 """
+import os
 import json
 import sys
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("TFTMETA_ROOT") or Path(__file__).resolve().parent.parent)
 OUT = ROOT / "data" / "augment_icons"
 CDN = "https://raw.communitydragon.org/latest/game/"
 

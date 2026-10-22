@@ -9,7 +9,7 @@ from PIL import Image, ImageEnhance, ImageTk
 
 from .gamedata import DATA
 
-ROOT = Path(__file__).resolve().parent.parent
+from .paths import ROOT  # noqa: E402
 CONFIG = ROOT / "config.json"
 DEFAULTS = {"interval_s": 2.5, "x": 1575, "y": 420, "width": 335, "height": 600, "alpha": 0.9,
             "locked": None, "save_carousel_frames": True,

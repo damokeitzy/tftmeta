@@ -267,6 +267,7 @@ class Worker(threading.Thread):
                 offers = carousel_offers()
                 if self.cfg.get("save_carousel_frames") and round_ not in saved_rounds and not self.source:
                     saved_rounds.add(round_)  # one frame per carousel, for calibrating icon sizes
+                    (ROOT / "tests" / "fixtures").mkdir(parents=True, exist_ok=True)
                     Image.fromarray(frame).save(ROOT / "tests" / "fixtures" / f"carousel_{round_}.png")
             # the augment you took: every offer seen on this augment screen (rerolls too) until one of
             # them shows up in the box above your lamp
