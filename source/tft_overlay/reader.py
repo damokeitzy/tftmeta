@@ -194,11 +194,15 @@ class Reader:
         return self.read_bottom(frame)[0]
 
     def read_round(self, frame, cropped=False):
-        """'4-2' or None. cropped=True: `frame` is already just ROUND_REGION (cheap polling)."""
+        """'4-2' (Tocker's Trials: up to '3-10') or None. cropped=True: `frame` is already just ROUND_REGION
+        (cheap polling)."""
+        import cv2
         img = frame if cropped else crop(frame, ROUND_REGION)
+        # Tocker's wider top bar puts the label right at the crop's left edge, where the text detector
+        # misses it (stage 1 was never read): give it a margin
+        img = cv2.copyMakeBorder(np.ascontiguousarray(img), 16, 16, 16, 16, cv2.BORDER_REPLICATE)
         for attempt in (img, None):
             if attempt is None:  # label is dimmed on some screens (augment pick): enlarge + boost contrast
-                import cv2
                 g = cv2.cvtColor(np.ascontiguousarray(img), cv2.COLOR_RGB2GRAY)
                 g = cv2.normalize(cv2.resize(g, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC), None, 0, 255,
                                   cv2.NORM_MINMAX)
@@ -207,7 +211,7 @@ class Reader:
             else:
                 key = "round"
             for _, _, text in self._lines(attempt, key):
-                m = re.search(r"(\d)\s*[-–]\s*(\d)", text)
+                m = re.search(r"(\d)\s*[-–]\s*(10|\d)", text)
                 if m:
                     return f"{m.group(1)}-{m.group(2)}"
         return None

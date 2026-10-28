@@ -410,6 +410,2042 @@
      ]
     ]
    }
+  },
+  {
+   "name": "Vanguard Morgana (sleeper) — Standard",
+   "tier": "A",
+   "custom": true,
+   "source": "SeeMeta ranked results 7–21 Oct 2026 ('Vanguard Morgana' 61.6% top 4, avg 3.76), reshaped from your Tocker's test (2026-10-24). Items from the guides (Morgana: bunnymuffins' Invoker Ahri card; Sentinel: Vow + Adaptive). Positions are a guess.",
+   "units": [
+    "Hecarim",
+    "Elise",
+    "Fiddlesticks",
+    "Sentinel",
+    "Diana",
+    "Morgana",
+    "Cassiopeia",
+    "Alune"
+   ],
+   "board": [
+    {
+     "unit": "Hecarim",
+     "pos": 2,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Hecarim.png"
+    },
+    {
+     "unit": "Elise",
+     "pos": 3,
+     "three": false,
+     "items": [
+      "Titan's Resolve"
+     ],
+     "prop": false,
+     "icon": "DA_18_Elise.png"
+    },
+    {
+     "unit": "Fiddlesticks",
+     "pos": 4,
+     "three": true,
+     "items": [
+      "Gargoyle Stoneplate",
+      "Warmog's Armor",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_Fiddlesticks18.png"
+    },
+    {
+     "unit": "Sentinel",
+     "pos": 5,
+     "three": false,
+     "items": [
+      "Protector's Vow",
+      "Adaptive Helm"
+     ],
+     "prop": false,
+     "icon": "DA_Sentinel18.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 6,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Morgana",
+     "pos": 18,
+     "three": false,
+     "items": [
+      "Void Staff",
+      "Morellonomicon",
+      "Rabadon's Deathcap"
+     ],
+     "prop": false,
+     "icon": "DA_18_Morgana.png"
+    },
+    {
+     "unit": "Cassiopeia",
+     "pos": 23,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Cassiopeia.png"
+    },
+    {
+     "unit": "Alune",
+     "pos": 26,
+     "three": false,
+     "items": [
+      "Spear of Shojin",
+      "Rabadon's Deathcap",
+      "Archangel's Staff"
+     ],
+     "prop": false,
+     "icon": "DA_18_Alune.png"
+    }
+   ],
+   "carries": {
+    "Morgana": [
+     "Void Staff",
+     "Morellonomicon",
+     "Rabadon's Deathcap"
+    ],
+    "Alune": [
+     "Spear of Shojin",
+     "Rabadon's Deathcap",
+     "Archangel's Staff"
+    ],
+    "Fiddlesticks": [
+     "Gargoyle Stoneplate",
+     "Warmog's Armor",
+     "Sunfire Cape"
+    ],
+    "Elise": [
+     "Titan's Resolve"
+    ],
+    "Sentinel": [
+     "Protector's Vow",
+     "Adaptive Helm"
+    ]
+   },
+   "augments": [],
+   "notes": "Sleeper: SeeMeta's 'Vanguard Morgana' had the second-best ranked numbers (61.6% top 4) and no guide covers it. Your Tocker's test: the 2★ 5-costs (Taric, Elder Dragon) are too hard to hit and games barely reach 8 against Solar / Elderwood / Fae / Riftbeast mid-game boards, so this is the level 8 version: Fiddlesticks 3★ tanks (Sunfire for the anti-heal on Fae / Elise), Hecarim makes Vanguard 4 instead of Taric, Morgana carries, Alune is the upside. Late, if healthy: Taric for Hecarim, Elder Dragon (2 slots) at 10.",
+   "special_items_optional": true,
+   "plan": {
+    "style": "Level 8 (4-cost carry) + Fiddlesticks 3★",
+    "roll_at": "Level 7",
+    "when": "Slow roll at level 7 (3-5 / 4-1) for Fiddlesticks 3★ and 2★ Diana / Elise / Hecarim, then level 8 at 4-2 and roll for Morgana and Sentinel 2★. Games rarely reach 9 now: don't plan around 5-costs.",
+    "bail": "Switch if Fiddlesticks or Morgana is held by 2+ players, or you're under ~30 HP at 4-2 without a 2★ Morgana.",
+    "realistic": "Realistic target: Fiddlesticks 3★, Morgana and Sentinel 2★, at level 8. Alune 2★ is the upside; Taric and Elder Dragon only if the game goes long.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 4"
+     ],
+     [
+      "2-5",
+      "Lv 5"
+     ],
+     [
+      "3-2",
+      "Lv 6"
+     ],
+     [
+      "3-5",
+      "Lv 7 · slow roll for Fiddlesticks 3★"
+     ],
+     [
+      "4-2",
+      "Lv 8 · roll for Morgana / Sentinel"
+     ],
+     [
+      "5-2",
+      "Lv 9 only if healthy"
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Kog'Maw Adaptor 4 (yours) — Gromp",
+   "tier": "A",
+   "custom": true,
+   "source": "bunnymuffins' Adaptor Master Yi Reroll (AP Adaptors) board and items + Gromp at level 8 for Adaptor 4 — your call after 612k Legendary in Tocker's (2026-10-24). Akali works as the 4th Adaptor too.",
+   "units": [
+    "Vi",
+    "Krug",
+    "Sett",
+    "Yorick",
+    "Master Yi",
+    "Kog'Maw",
+    "Nidalee",
+    "Gromp"
+   ],
+   "board": [
+    {
+     "unit": "Vi",
+     "pos": 3,
+     "three": false,
+     "items": [
+      "Spirit Visage",
+      "Warmog's Armor",
+      "Gargoyle Stoneplate"
+     ],
+     "prop": false,
+     "icon": "DA_Vi18.png"
+    },
+    {
+     "unit": "Krug",
+     "pos": 6,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Krug18.png"
+    },
+    {
+     "unit": "Sett",
+     "pos": 7,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Sett.png"
+    },
+    {
+     "unit": "Yorick",
+     "pos": 10,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Yorick.png"
+    },
+    {
+     "unit": "Master Yi",
+     "pos": 15,
+     "three": true,
+     "items": [
+      "Edge of Night",
+      "Guinsoo's Rageblade",
+      "Gargoyle Stoneplate"
+     ],
+     "prop": false,
+     "icon": "DA_18_MasterYi_AD.png"
+    },
+    {
+     "unit": "Kog'Maw",
+     "pos": 22,
+     "three": true,
+     "items": [
+      "Spear of Shojin",
+      "Infinity Edge",
+      "Red Buff"
+     ],
+     "prop": false,
+     "icon": "DA_KogMaw18_AD.png"
+    },
+    {
+     "unit": "Nidalee",
+     "pos": 23,
+     "three": false,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Jeweled Gauntlet",
+      "Striker's Flail"
+     ],
+     "prop": false,
+     "icon": "DA_Nidalee18_AP.png"
+    },
+    {
+     "unit": "Gromp",
+     "pos": 26,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Gromp18_AP.png"
+    }
+   ],
+   "carries": {
+    "Kog'Maw": [
+     "Spear of Shojin",
+     "Infinity Edge",
+     "Red Buff"
+    ],
+    "Master Yi": [
+     "Edge of Night",
+     "Guinsoo's Rageblade",
+     "Gargoyle Stoneplate"
+    ],
+    "Nidalee": [
+     "Guinsoo's Rageblade",
+     "Jeweled Gauntlet",
+     "Striker's Flail"
+    ],
+    "Vi": [
+     "Spirit Visage",
+     "Warmog's Armor",
+     "Gargoyle Stoneplate"
+    ]
+   },
+   "augments": [
+    "Silver: Team Building, Latent Forge, Expedition",
+    "Gold: Portable Forge, Cooking Pot, Legion Of Threes",
+    "Prismatic: Forged In Strength, Sweet Treats, Living Forge"
+   ],
+   "notes": "Only two 3★ chases: Kog'Maw (the carry) and Master Yi; Vi and Krug stay 2★ (Krug keeps Brawler 2 with Sett; a 2★ only needs 3 copies even with Riftbeast players around) — four 3★ 3-costs was too many for the shop. Get Gromp early: in stage 2 he and Akali already make Adaptor 2, and it saved you about 5 minutes of game time. Kog'Maw is the carry (Shojin, IE, Red Buff); Master Yi and Nidalee are the other Adaptors. Adaptor 4 (Master Yi, Kog'Maw, Nidalee + Gromp) at level 8: the 7-unit bunnymuffins board plus a 4th Adaptor, which is great for Yi. Gromp (2-cost, AP, ranged) is the easy pick; Akali (1-cost) also counts. Barely anyone plays these units, so the 3★ Yi / Kog'Maw / Vi / Krug come easily. Pivot: Aphelios (Nidalee Flex / Aphelios Nidalee) shares Nidalee, Kog'Maw and Vi, so hold an early Aphelios or two and go whichever way the 3★s come — Kog'Maw 3★, or Aphelios if he shows up more.",
+   "special_items_optional": true,
+   "howto": {
+    "gameplan": "Play around a Yi, Rengar orb or a 2-1 artifact to get into this line. Master Yi is a stat stick that needs to either hit before tempo or have a special item to perform. Rengar is a great duo carry that can accelerate your econ but is very item specific and inconsistent to play for from behind. Non-Rengar Yi is AP, Yi Rengar is AD.",
+    "stages": [
+     [
+      "Stage 1-2",
+      "Play your strongest board around an early Yi or Rengar and 3 Blossom or an Artifact holder. Do not hard commit to this line unless you have an Artifact, uncontested Rengar line or Bruiser Emblem."
+     ],
+     [
+      "Stage 3",
+      "If by 3-2 the Yi set up looks inconsistent look to pivot to a 4 cost line. If you have a strong stage 3 Yi or Rengar set up use the tempo to econ up to roll for Yi 3 on stage 4."
+     ],
+     [
+      "Stage 4",
+      "Slow roll for Yi, Kog'Maw, Rengar and a 3 star front liner. If you don't have a special item you will likely struggle against upgraded 4 cost boards unless you can cheat out a 3 star ahead of tempo."
+     ],
+     [
+      "Stage 5+",
+      "Complete your 3 stars and push for more Adaptor trait levels. If you reach 3 item Yi, Kog'Maw, Tank and Rengar you are in a great spot to top 2."
+     ]
+    ],
+    "tips": [
+     "Nidalee 2 is a enough to cover backline damage if you miss on Kog'Maw 3 but Yi 3 is absolutely non-negotiable.",
+     "This comp doesn't do great from behind so make sure you have a very good condition if you are playing it from loss streak.",
+     "Take the Healing Primal buff most of your games. If you are >50 HP, strong and have a consistent way for Nidalee to get takedowns, you can consider taking items. Primal Buff Prio: Healing > Attack Speed > Execute"
+    ],
+    "holders": "Master Yi, Kog'Maw",
+    "emblem": "Brawler Master Yi",
+    "items": [
+     [
+      "AP",
+      "Master Yi*: Guinsoo's*, Edge of Night*, Titan's (Special Item Priority: Wit's End > Hellfire Hatchet > Flickerblade > Fishbones > RFC > Brawler Emblem > Titanic Everything replaces Titan's except for Flicker which replaces Guinsoo's)",
+      [
+       "Master Yi",
+       "Guinsoo's",
+       "Edge of Night"
+      ]
+     ],
+     [
+      "AD Master Yi",
+      "QSS*, Edge of Night*, Titan's (Special Item Priority: Hellfire Hatchet > Fishbones > RFC > Brawler Emblem > Titanic)",
+      [
+       "QSS",
+       "Edge of Night"
+      ]
+     ],
+     [
+      "Kog'Maw",
+      "IE, Shojin, Red Buff*",
+      [
+       "Red Buff"
+      ]
+     ],
+     [
+      "Nidalee",
+      "Guinsoo's, Leftover AP or AD",
+      []
+     ],
+     [
+      "Vi",
+      "Gargoyle's, Warmogs, Spirit's",
+      []
+     ],
+     [
+      "Krug",
+      "Leftover Tank",
+      []
+     ]
+    ],
+    "augments": [
+     [
+      "BIS",
+      "Artifact Generation, Cooking Pot"
+     ],
+     [
+      "General",
+      "Item > Reroll > Econ > Combat"
+     ]
+    ]
+   },
+   "plan": {
+    "style": "Reroll (3-cost carry)",
+    "roll_at": "Level 7",
+    "when": "Level to 7 around 3-5 / 4-1, then slow roll the gold above 50. If you have to roll early to stabilise, roll at 6 for the 2-cost pieces only — then rebuild gold and get to 7 before rolling for 3-costs (3-cost odds at 6 are only 25%).",
+    "bail": "Switch if 2+ opponents hold your carry, or you're under ~30 HP at 4-1 without a 2★ carry.",
+    "realistic": "Realistic target: main carry 3★, the rest 2★, at level 7 with full items. If the carry is still 2★ by 4-5, stop rolling — level and play for top 4. A 3★ board is the upside, not the plan.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 4"
+     ],
+     [
+      "2-5",
+      "Lv 5"
+     ],
+     [
+      "3-2",
+      "Lv 6"
+     ],
+     [
+      "3-5 / 4-1",
+      "Lv 7 · slow roll above 50g"
+     ],
+     [
+      "5-1",
+      "Lv 8"
+     ]
+    ]
+   },
+   "main": "Kog'Maw",
+   "early": [
+    {
+     "unit": "Gromp",
+     "items": []
+    },
+    {
+     "unit": "Akali",
+     "items": []
+    },
+    {
+     "unit": "Yorick",
+     "items": []
+    },
+    {
+     "unit": "Krug",
+     "items": []
+    },
+    {
+     "unit": "Kog'Maw",
+     "items": []
+    }
+   ]
+  },
+  {
+   "name": "Tocker's Kog'Maw Adaptor (score)",
+   "tier": "A",
+   "custom": true,
+   "source": "Your Kog'Maw Adaptor 4 (yours) — Gromp board and items, played for Tocker's Trials score: your best run was 612k Legendary with six 3★ at Lv 8 (2026-10-24). Rules from Riot's Tocker's Trials article (30 rounds, 3 lives; score = surviving champions, unused items, fight time, star-ups).",
+   "units": [
+    "Vi",
+    "Krug",
+    "Sett",
+    "Yorick",
+    "Master Yi",
+    "Kog'Maw",
+    "Nidalee",
+    "Gromp"
+   ],
+   "board": [
+    {
+     "unit": "Vi",
+     "pos": 3,
+     "three": true,
+     "items": [
+      "Spirit Visage",
+      "Warmog's Armor",
+      "Gargoyle Stoneplate"
+     ],
+     "prop": false,
+     "icon": "DA_Vi18.png"
+    },
+    {
+     "unit": "Krug",
+     "pos": 6,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Krug18.png"
+    },
+    {
+     "unit": "Sett",
+     "pos": 7,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Sett.png"
+    },
+    {
+     "unit": "Yorick",
+     "pos": 10,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Yorick.png"
+    },
+    {
+     "unit": "Master Yi",
+     "pos": 15,
+     "three": true,
+     "items": [
+      "Edge of Night",
+      "Guinsoo's Rageblade",
+      "Gargoyle Stoneplate"
+     ],
+     "prop": false,
+     "icon": "DA_18_MasterYi_AD.png"
+    },
+    {
+     "unit": "Kog'Maw",
+     "pos": 22,
+     "three": true,
+     "items": [
+      "Spear of Shojin",
+      "Infinity Edge",
+      "Red Buff"
+     ],
+     "prop": false,
+     "icon": "DA_KogMaw18_AD.png"
+    },
+    {
+     "unit": "Nidalee",
+     "pos": 23,
+     "three": false,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Jeweled Gauntlet",
+      "Striker's Flail"
+     ],
+     "prop": false,
+     "icon": "DA_Nidalee18_AP.png"
+    },
+    {
+     "unit": "Gromp",
+     "pos": 26,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Gromp18_AP.png"
+    }
+   ],
+   "carries": {
+    "Kog'Maw": [
+     "Spear of Shojin",
+     "Infinity Edge",
+     "Red Buff"
+    ],
+    "Master Yi": [
+     "Edge of Night",
+     "Guinsoo's Rageblade",
+     "Gargoyle Stoneplate"
+    ],
+    "Nidalee": [
+     "Guinsoo's Rageblade",
+     "Jeweled Gauntlet",
+     "Striker's Flail"
+    ],
+    "Vi": [
+     "Spirit Visage",
+     "Warmog's Armor",
+     "Gargoyle Stoneplate"
+    ]
+   },
+   "augments": [
+    "Gold (1-5, 2-5): Portable Forge, Cooking Pot, Legion Of Threes",
+    "Prismatic (3-5): Forged In Strength, Sweet Treats, Living Forge"
+   ],
+   "notes": "Tocker's Trials only (suggested there, or pin it). Same board and items as your Kog'Maw Adaptor 4, but six 3★ targets instead of two: nobody else takes copies (18 of each 3-cost, all yours) and every star-up adds to the score. Order: Kog'Maw, Master Yi, then Krug and Vi; Yorick and Gromp 3★ come almost free on the way. Nidalee and Sett stay 2★ (4-costs). Letters here = your Tocker's scores, not ranked results: 612k (2026-10-24) puts it at A behind Solar Kayle & Xayah's 692k (2026-10-25) and ahead of Spellweaver LeBlanc's 515k.",
+   "special_items_optional": true,
+   "howto": {
+    "gameplan": "Score (game files) = Surviving Champs + Time Bonus + Star Levels + Gold Interest + Item Greed + Close Calls; the point values aren't in the files. So win fast and keep everyone alive: a frontline that holds and as many 3★ as you can fit. Your best: six 3★ at Lv 8, 612k Legendary.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1, so don't buy XP. Buy every Kog'Maw, Master Yi, Krug and Vi (all 18 copies are yours) and play Gromp, Akali, Yorick, Krug and Kog'Maw for Adaptor 2 and quick wins. Build to 50 gold. Augment at 1-5: items or reroll."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3, Lv 7 at 2-6. From Lv 7 roll everything above 50 for Kog'Maw 3★, then Master Yi. Slam Kog'Maw's and Yi's items as soon as they're done: faster fights score more. Augment at 2-5."
+     ],
+     [
+      "Stage 3",
+      "Finish Krug and Vi 3★ at Lv 7, then Lv 8 around 3-6 for Nidalee, Sett and Gromp (Adaptor 4). Prismatic augment at 3-5. Keep 50 gold for interest (Gold Interest scores every round) and roll only the gold above it; spend everything on the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Get Gromp early: in your runs it cut about 5 minutes, and faster fights score more.",
+     "Three lives, not HP: three lost rounds ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "Master Yi, Kog'Maw",
+    "emblem": "Brawler Master Yi",
+    "items": [
+     [
+      "AP",
+      "Master Yi*: Guinsoo's*, Edge of Night*, Titan's (Special Item Priority: Wit's End > Hellfire Hatchet > Flickerblade > Fishbones > RFC > Brawler Emblem > Titanic Everything replaces Titan's except for Flicker which replaces Guinsoo's)",
+      [
+       "Master Yi",
+       "Guinsoo's",
+       "Edge of Night"
+      ]
+     ],
+     [
+      "AD Master Yi",
+      "QSS*, Edge of Night*, Titan's (Special Item Priority: Hellfire Hatchet > Fishbones > RFC > Brawler Emblem > Titanic)",
+      [
+       "QSS",
+       "Edge of Night"
+      ]
+     ],
+     [
+      "Kog'Maw",
+      "IE, Shojin, Red Buff*",
+      [
+       "Red Buff"
+      ]
+     ],
+     [
+      "Nidalee",
+      "Guinsoo's, Leftover AP or AD",
+      []
+     ],
+     [
+      "Vi",
+      "Gargoyle's, Warmogs, Spirit's",
+      []
+     ],
+     [
+      "Krug",
+      "Leftover Tank",
+      []
+     ]
+    ],
+    "augments": [
+     [
+      "Gold (1-5, 2-5)",
+      "Portable Forge, Cooking Pot, Legion Of Threes"
+     ],
+     [
+      "Prismatic (3-5)",
+      "Forged In Strength, Sweet Treats, Living Forge"
+     ],
+     [
+      "General",
+      "Item > Reroll > Econ > Combat"
+     ]
+    ]
+   },
+   "plan": {
+    "style": "Reroll (3-cost carry)",
+    "roll_at": "Level 7",
+    "when": "Tocker's: Lv 7 by 2-6, then roll every coin above 50 for Kog'Maw 3★, then Master Yi, Krug and Vi. With the pool all yours that's about 150g of rolling per 3★ at Lv 7. Lv 8 once they're done.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Your run: six 3★ at Lv 8, 612k Legendary (600k+; the next rank is 800k). Keep 50 gold for interest (Gold Interest scores every round) until the last round, 3-10.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5"
+     ],
+     [
+      "2-3",
+      "Lv 6"
+     ],
+     [
+      "2-6",
+      "Lv 7 · roll above 50 for 3★"
+     ],
+     [
+      "3-6",
+      "Lv 8 · Nidalee, Sett, Gromp"
+     ]
+    ]
+   },
+   "main": "Kog'Maw",
+   "early": [
+    {
+     "unit": "Gromp",
+     "items": []
+    },
+    {
+     "unit": "Akali",
+     "items": []
+    },
+    {
+     "unit": "Yorick",
+     "items": []
+    },
+    {
+     "unit": "Krug",
+     "items": []
+    },
+    {
+     "unit": "Kog'Maw",
+     "items": []
+    }
+   ],
+   "mode": "tockers"
+  },
+  {
+   "name": "Tocker's Kayle & Aphelios (METAsrc)",
+   "tier": "C",
+   "custom": true,
+   "mode": "tockers",
+   "source": "METAsrc Tocker's Trials comps, Set 18 patch 18.5 (page you pasted, 2026-10-25); items from bunnymuffins' Kayle Reroll — Eclipse (Kayle, Leona) and Aphelios Flex (Aphelios, Amumu).",
+   "units": [
+    "Leona",
+    "Varus",
+    "Kayle",
+    "Sejuani",
+    "Shen",
+    "Diana",
+    "Aphelios",
+    "Amumu",
+    "Alune"
+   ],
+   "board": [
+    {
+     "unit": "Amumu",
+     "pos": 3,
+     "three": false,
+     "items": [
+      "Crownguard",
+      "Gargoyle Stoneplate",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_Amumu18.png"
+    },
+    {
+     "unit": "Shen",
+     "pos": 4,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Shen.png"
+    },
+    {
+     "unit": "Sejuani",
+     "pos": 10,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Sejuani.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 11,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Leona",
+     "pos": 12,
+     "three": true,
+     "items": [
+      "Evenshroud",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_18_Leona.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 22,
+     "three": false,
+     "items": [
+      "Infinity Edge",
+      "Kraken's Fury",
+      "Red Buff"
+     ],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    },
+    {
+     "unit": "Varus",
+     "pos": 25,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Varus.png"
+    },
+    {
+     "unit": "Alune",
+     "pos": 27,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Alune.png"
+    },
+    {
+     "unit": "Kayle",
+     "pos": 28,
+     "three": true,
+     "items": [
+      "Jeweled Gauntlet",
+      "Rabadon's Deathcap",
+      "Guinsoo's Rageblade"
+     ],
+     "prop": false,
+     "icon": "DA_18_Kayle.png"
+    }
+   ],
+   "carries": {
+    "Kayle": [
+     "Jeweled Gauntlet",
+     "Rabadon's Deathcap",
+     "Guinsoo's Rageblade"
+    ],
+    "Aphelios": [
+     "Infinity Edge",
+     "Kraken's Fury",
+     "Red Buff"
+    ],
+    "Amumu": [
+     "Crownguard",
+     "Gargoyle Stoneplate",
+     "Warmog's Armor"
+    ],
+    "Leona": [
+     "Evenshroud",
+     "Sunfire Cape"
+    ]
+   },
+   "main": "Kayle",
+   "augments": [],
+   "notes": "Tocker's only. METAsrc's Tocker's Trials Inferno Lunar Rapidfire Solar (S+) comp (Set 18, patch 18.5): Leona, Varus, Kayle, Sejuani, Shen, Diana, Aphelios, Amumu, Alune. Their 'top 4' 83.7% measures runs survived, not score. Items from bunnymuffins' Kayle Reroll — Eclipse (Kayle, Leona) and Aphelios Flex (Aphelios, Amumu); positions for Varus, Shen, Amumu are a guess. A here: your run scored 630k (2026-10-25), behind Solar Kayle & Xayah's 692k best and ahead of Kog'Maw Adaptor (612k).",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Leona",
+     "items": []
+    },
+    {
+     "unit": "Varus",
+     "items": []
+    },
+    {
+     "unit": "Kayle",
+     "items": []
+    },
+    {
+     "unit": "Sejuani",
+     "items": []
+    },
+    {
+     "unit": "Shen",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Reroll (2-cost carry)",
+    "roll_at": "Level 6",
+    "when": "Tocker's: Lv 6 at 2-3 and roll the gold above 50 for Kayle 3★, the carry (Jeweled Gauntlet, Rabadon's, Guinsoo's), then Leona and Sejuani 3★. Lv 7 at 2-9.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls. Keep 50 gold for interest until the last round, 3-10. 600k is Legendary; the next rank is 800k.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5"
+     ],
+     [
+      "2-3",
+      "Lv 6 · roll above 50 for 3★"
+     ],
+     [
+      "2-9",
+      "Lv 7"
+     ],
+     [
+      "3-3",
+      "Lv 8 · Aphelios, Amumu"
+     ],
+     [
+      "3-6",
+      "Lv 9 · Alune"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "METAsrc's Inferno Lunar Rapidfire Solar (S+) Tocker's comp. Score counts surviving champions, fight speed, star levels, gold interest, item greed and close calls, so win fast, keep everyone alive and keep 50 gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1, so don't buy XP. Buy every Kayle, Leona, Sejuani and Diana (nobody else takes copies) and play Leona, Sejuani, Varus, Kayle and Shen for Solar. Build to 50 gold."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3 and roll the gold above 50 for Kayle 3★, the carry (Jeweled Gauntlet, Rabadon's, Guinsoo's), then Leona and Sejuani 3★. Lv 7 at 2-9."
+     ],
+     [
+      "Stage 3",
+      "Lv 8 around 3-3 for Aphelios (IE, Kraken's, Red Buff) and Amumu (Crownguard, Gargoyle, Warmog's), Lv 9 at 3-6 for Alune. Keep 50 gold for interest (Gold Interest scores every round); spend everything on the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "Kayle, Aphelios, Amumu, Leona",
+    "emblem": "",
+    "items": [
+     [
+      "Kayle",
+      "Jeweled Gauntlet, Rabadon's Deathcap, Guinsoo's Rageblade",
+      []
+     ],
+     [
+      "Aphelios",
+      "Infinity Edge, Kraken's Fury, Red Buff",
+      []
+     ],
+     [
+      "Amumu",
+      "Crownguard, Gargoyle Stoneplate, Warmog's Armor",
+      []
+     ],
+     [
+      "Leona",
+      "Evenshroud, Sunfire Cape",
+      []
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Tocker's Spellweaver LeBlanc (METAsrc)",
+   "tier": "B",
+   "custom": true,
+   "mode": "tockers",
+   "source": "METAsrc Tocker's Trials comps, Set 18 patch 18.5 (page you pasted, 2026-10-25); items from your Spellweaver LeBlanc (LeBlanc) and bunnymuffins' Cassiopeia Reroll (Cassiopeia, Fiddlesticks).",
+   "units": [
+    "Ornn",
+    "Rek'Sai",
+    "Veigar",
+    "Alistar",
+    "LeBlanc",
+    "Cassiopeia",
+    "Fiddlesticks",
+    "Ahri",
+    "Alune"
+   ],
+   "board": [
+    {
+     "unit": "Alistar",
+     "pos": 2,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Alistar.png"
+    },
+    {
+     "unit": "Ornn",
+     "pos": 3,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Ornn.png"
+    },
+    {
+     "unit": "Rek'Sai",
+     "pos": 4,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_RekSai.png"
+    },
+    {
+     "unit": "Fiddlesticks",
+     "pos": 5,
+     "three": true,
+     "items": [
+      "Ionic Spark",
+      "Spirit Visage",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_Fiddlesticks18.png"
+    },
+    {
+     "unit": "Veigar",
+     "pos": 23,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Veigar.png"
+    },
+    {
+     "unit": "LeBlanc",
+     "pos": 24,
+     "three": true,
+     "items": [
+      "Spear of Shojin",
+      "Rabadon's Deathcap",
+      "Statikk Shiv"
+     ],
+     "prop": false,
+     "icon": "DA_18_LeBlanc.png"
+    },
+    {
+     "unit": "Cassiopeia",
+     "pos": 25,
+     "three": true,
+     "items": [
+      "Spear of Shojin",
+      "Rabadon's Deathcap",
+      "Hextech Gunblade"
+     ],
+     "prop": false,
+     "icon": "DA_18_Cassiopeia.png"
+    },
+    {
+     "unit": "Ahri",
+     "pos": 26,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Ahri.png"
+    },
+    {
+     "unit": "Alune",
+     "pos": 27,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Alune.png"
+    }
+   ],
+   "carries": {
+    "LeBlanc": [
+     "Spear of Shojin",
+     "Rabadon's Deathcap",
+     "Statikk Shiv"
+    ],
+    "Cassiopeia": [
+     "Spear of Shojin",
+     "Rabadon's Deathcap",
+     "Hextech Gunblade"
+    ],
+    "Fiddlesticks": [
+     "Ionic Spark",
+     "Spirit Visage",
+     "Sunfire Cape"
+    ]
+   },
+   "main": "LeBlanc",
+   "augments": [],
+   "notes": "Tocker's only. METAsrc's Tocker's Trials Spellweaver (S+) comp (Set 18, patch 18.5): Ornn, Rek'Sai, Veigar, Alistar, LeBlanc, Cassiopeia, Fiddlesticks, Ahri, Alune. Their 'top 4' 100% measures runs survived, not score. Items from your Spellweaver LeBlanc (LeBlanc) and bunnymuffins' Cassiopeia Reroll (Cassiopeia, Fiddlesticks); positions for Rek'Sai, Veigar, Alistar are a guess. B here: your Spellweaver run scored 515k (2026-10-25), behind Solar Kayle & Xayah (692k) and Kog'Maw Adaptor (612k). It also won at Lv 9 on 2026-10-21 (score not recorded).",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Ornn",
+     "items": []
+    },
+    {
+     "unit": "Rek'Sai",
+     "items": []
+    },
+    {
+     "unit": "Veigar",
+     "items": []
+    },
+    {
+     "unit": "Alistar",
+     "items": []
+    },
+    {
+     "unit": "LeBlanc",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Reroll (2-cost carry)",
+    "roll_at": "Level 6",
+    "when": "Tocker's: Lv 6 at 2-3 and roll above 50 for LeBlanc 3★ (Shojin, Rabadon's, Statikk). Lv 7 at 2-9 for Cassiopeia (Shojin, Rabadon's, Gunblade) and Fiddlesticks 3★ (Ionic Spark, Spirit Visage, Sunfire).",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls. Keep 50 gold for interest until the last round, 3-10. 600k is Legendary; the next rank is 800k.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5 · Ornn, Veigar 3★"
+     ],
+     [
+      "2-3",
+      "Lv 6 · roll above 50 for LeBlanc 3★"
+     ],
+     [
+      "2-9",
+      "Lv 7 · Cassiopeia, Fiddlesticks 3★"
+     ],
+     [
+      "3-3",
+      "Lv 8 · Ahri"
+     ],
+     [
+      "3-6",
+      "Lv 9 · Alune"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "METAsrc's Spellweaver (S+) Tocker's comp. Score counts surviving champions, fight speed, star levels, gold interest, item greed and close calls, so win fast, keep everyone alive and keep 50 gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1. Buy every Ornn, Veigar, LeBlanc, Cassiopeia and Fiddlesticks, play Ornn, Rek'Sai, Veigar and LeBlanc, and roll the gold above 50 at Lv 5 for Ornn and Veigar 3★ (1-costs are 45% of the shop there)."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3 and roll above 50 for LeBlanc 3★ (Shojin, Rabadon's, Statikk). Lv 7 at 2-9 for Cassiopeia (Shojin, Rabadon's, Gunblade) and Fiddlesticks 3★ (Ionic Spark, Spirit Visage, Sunfire)."
+     ],
+     [
+      "Stage 3",
+      "Lv 8 around 3-3 for Ahri, Lv 9 at 3-6 for Alune: 6 Spellweaver. Keep 50 gold for interest (Gold Interest scores every round); spend everything on the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "LeBlanc, Cassiopeia, Fiddlesticks",
+    "emblem": "",
+    "items": [
+     [
+      "LeBlanc",
+      "Spear of Shojin, Rabadon's Deathcap, Statikk Shiv",
+      []
+     ],
+     [
+      "Cassiopeia",
+      "Spear of Shojin, Rabadon's Deathcap, Hextech Gunblade",
+      []
+     ],
+     [
+      "Fiddlesticks",
+      "Ionic Spark, Spirit Visage, Sunfire Cape",
+      []
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Tocker's Azir Executioners (METAsrc)",
+   "tier": "B",
+   "custom": true,
+   "mode": "tockers",
+   "source": "METAsrc Tocker's Trials comps, Set 18 patch 18.5 (page you pasted, 2026-10-25); items from bunnymuffins' Azir Rammus Reroll.",
+   "units": [
+    "Veigar",
+    "Teemo",
+    "Azir",
+    "Rammus",
+    "Fiddlesticks",
+    "Ezreal",
+    "Soraka",
+    "Zyra",
+    "Kennen"
+   ],
+   "board": [
+    {
+     "unit": "Rammus",
+     "pos": 4,
+     "three": true,
+     "items": [
+      "Crownguard",
+      "Gargoyle Stoneplate",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_18_Rammus.png"
+    },
+    {
+     "unit": "Kennen",
+     "pos": 11,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Kennen.png"
+    },
+    {
+     "unit": "Teemo",
+     "pos": 18,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Teemo.png"
+    },
+    {
+     "unit": "Fiddlesticks",
+     "pos": 19,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Fiddlesticks18.png"
+    },
+    {
+     "unit": "Azir",
+     "pos": 22,
+     "three": true,
+     "items": [
+      "Hextech Gunblade",
+      "Guinsoo's Rageblade",
+      "Rabadon's Deathcap"
+     ],
+     "prop": false,
+     "icon": "DA_18_Azir.png"
+    },
+    {
+     "unit": "Zyra",
+     "pos": 23,
+     "three": false,
+     "items": [
+      "Morellonomicon",
+      "Jeweled Gauntlet",
+      "Void Staff"
+     ],
+     "prop": false,
+     "icon": "DA_18_Zyra.png"
+    },
+    {
+     "unit": "Ezreal",
+     "pos": 24,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Ezreal.png"
+    },
+    {
+     "unit": "Veigar",
+     "pos": 25,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Veigar.png"
+    },
+    {
+     "unit": "Soraka",
+     "pos": 28,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Soraka.png"
+    }
+   ],
+   "carries": {
+    "Azir": [
+     "Hextech Gunblade",
+     "Guinsoo's Rageblade",
+     "Rabadon's Deathcap"
+    ],
+    "Rammus": [
+     "Crownguard",
+     "Gargoyle Stoneplate",
+     "Warmog's Armor"
+    ],
+    "Zyra": [
+     "Morellonomicon",
+     "Jeweled Gauntlet",
+     "Void Staff"
+    ]
+   },
+   "main": "Azir",
+   "augments": [],
+   "notes": "Tocker's only. METAsrc's Tocker's Trials Executioner Flora Fatalis (S) comp (Set 18, patch 18.5): Veigar, Teemo, Azir, Rammus, Fiddlesticks, Ezreal, Soraka, Zyra, Kennen. Their 'top 4' 84.9% measures runs survived, not score. Items from bunnymuffins' Azir Rammus Reroll; positions for Ezreal, Kennen are a guess. B here: your Azir run scored 567k (2026-10-25), behind Solar Kayle & Xayah (692k, 577k) and Kog'Maw Adaptor (612k), ahead of Spellweaver LeBlanc (515k).",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Veigar",
+     "items": []
+    },
+    {
+     "unit": "Teemo",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Reroll (3-cost carry)",
+    "roll_at": "Level 7",
+    "when": "Tocker's: Lv 6 at 2-3, Lv 7 at 2-6, then roll above 50 for Azir 3★ (Gunblade, Guinsoo's, Rabadon's) and Rammus 3★ (Crownguard, Gargoyle, Warmog's). Teemo and Veigar 3★ on the way.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls. Keep 50 gold for interest until the last round, 3-10. 600k is Legendary; the next rank is 800k.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5"
+     ],
+     [
+      "2-3",
+      "Lv 6"
+     ],
+     [
+      "2-6",
+      "Lv 7 · roll above 50 for 3★"
+     ],
+     [
+      "3-3",
+      "Lv 8 · Ezreal, Soraka, Zyra"
+     ],
+     [
+      "3-6",
+      "Lv 9 · Kennen"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "METAsrc's Executioner Flora Fatalis (S) Tocker's comp. Score counts surviving champions, fight speed, star levels, gold interest, item greed and close calls, so win fast, keep everyone alive and keep 50 gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1. Buy every Azir, Rammus, Teemo and Veigar and play Teemo, Veigar, Rammus and Azir. Build to 50 gold."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3, Lv 7 at 2-6, then roll above 50 for Azir 3★ (Gunblade, Guinsoo's, Rabadon's) and Rammus 3★ (Crownguard, Gargoyle, Warmog's). Teemo and Veigar 3★ on the way."
+     ],
+     [
+      "Stage 3",
+      "Lv 8 around 3-3 for Ezreal, Soraka and Zyra (Morello, Jeweled Gauntlet, Void Staff), Lv 9 at 3-6 for Kennen. Keep 50 gold for interest (Gold Interest scores every round); spend everything on the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "Azir, Rammus, Zyra",
+    "emblem": "",
+    "items": [
+     [
+      "Azir",
+      "Hextech Gunblade*, Guinsoo's Rageblade*, Rabadon's Deathcap",
+      [
+       "Hextech Gunblade",
+       "Guinsoo's Rageblade"
+      ]
+     ],
+     [
+      "Rammus",
+      "Crownguard*, Gargoyle Stoneplate*, Warmog's Armor",
+      [
+       "Crownguard",
+       "Gargoyle Stoneplate"
+      ]
+     ],
+     [
+      "Zyra",
+      "Morellonomicon, Jeweled Gauntlet, Void Staff",
+      []
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Tocker's Solar Kayle & Xayah (METAsrc)",
+   "tier": "C",
+   "custom": true,
+   "mode": "tockers",
+   "source": "METAsrc Tocker's Trials comps, Set 18 patch 18.5 (page you pasted, 2026-10-25); items from bunnymuffins' Kayle Reroll — Eclipse.",
+   "units": [
+    "Leona",
+    "Ornn",
+    "Rakan",
+    "Xayah",
+    "Kayle",
+    "LeBlanc",
+    "Sejuani",
+    "Diana",
+    "Aphelios"
+   ],
+   "board": [
+    {
+     "unit": "Ornn",
+     "pos": 5,
+     "three": true,
+     "items": [
+      "Gargoyle Stoneplate",
+      "Spirit Visage",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_18_Ornn.png"
+    },
+    {
+     "unit": "Sejuani",
+     "pos": 10,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Sejuani.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 11,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Leona",
+     "pos": 12,
+     "three": true,
+     "items": [
+      "Evenshroud",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_18_Leona.png"
+    },
+    {
+     "unit": "Rakan",
+     "pos": 15,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Rakan.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 22,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    },
+    {
+     "unit": "LeBlanc",
+     "pos": 25,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_LeBlanc.png"
+    },
+    {
+     "unit": "Xayah",
+     "pos": 26,
+     "three": true,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Kraken's Fury",
+      "Kraken's Fury"
+     ],
+     "prop": false,
+     "icon": "DA_18_Xayah.png"
+    },
+    {
+     "unit": "Kayle",
+     "pos": 28,
+     "three": true,
+     "items": [
+      "Jeweled Gauntlet",
+      "Rabadon's Deathcap",
+      "Guinsoo's Rageblade"
+     ],
+     "prop": false,
+     "icon": "DA_18_Kayle.png"
+    }
+   ],
+   "carries": {
+    "Kayle": [
+     "Jeweled Gauntlet",
+     "Rabadon's Deathcap",
+     "Guinsoo's Rageblade"
+    ],
+    "Xayah": [
+     "Guinsoo's Rageblade",
+     "Kraken's Fury",
+     "Kraken's Fury"
+    ],
+    "Ornn": [
+     "Gargoyle Stoneplate",
+     "Spirit Visage",
+     "Warmog's Armor"
+    ],
+    "Leona": [
+     "Evenshroud",
+     "Sunfire Cape"
+    ]
+   },
+   "main": "Kayle",
+   "augments": [],
+   "notes": "Tocker's only. METAsrc's Tocker's Trials Rapidfire Solar (S) comp (Set 18, patch 18.5): Leona, Ornn, Rakan, Xayah, Kayle, LeBlanc, Sejuani, Diana, Aphelios. Their 'top 4' 86.9% measures runs survived, not score. Items from bunnymuffins' Kayle Reroll — Eclipse; positions for LeBlanc are a guess. A: 692k and 577k (2026-10-25), behind Elderwood Ezreal's 769k and ahead of Kog'Maw Adaptor (612k). That run rolled Kayle 3★ at Lv 6 on 3-1, got Leona and Diana 3★, Lv 7 at 3-6 and Lv 8 at 3-10 (1 gold and 1 XP short of Lv 9), lost one life at 3-8, and LeBlanc didn't duplicate — so there's more score in it: level earlier for the 9th slot. It also kept about 7 unused items on the bench most of the game. Second run: 577k (2026-10-25), Lv 9 by 3-6, but 150g of level-9 rolls found no 9th Aphelios for 3★ (none in 45 logged shops with 8 of 10 held).",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Leona",
+     "items": []
+    },
+    {
+     "unit": "Ornn",
+     "items": []
+    },
+    {
+     "unit": "Rakan",
+     "items": []
+    },
+    {
+     "unit": "Xayah",
+     "items": []
+    },
+    {
+     "unit": "Kayle",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Reroll (2-cost carry)",
+    "roll_at": "Level 6",
+    "when": "Tocker's: Lv 6 at 2-3 and roll above 50 for Kayle 3★ (Jeweled Gauntlet, Rabadon's, Guinsoo's). Xayah holds Guinsoo's and Kraken's, Ornn the tank items. Lv 7 at 2-9.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls. Keep 50 gold for interest until the last round, 3-10. 600k is Legendary; the next rank is 800k.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5 · Xayah, Leona, Ornn 3★"
+     ],
+     [
+      "2-3",
+      "Lv 6 · roll above 50 for Kayle 3★"
+     ],
+     [
+      "2-9",
+      "Lv 7"
+     ],
+     [
+      "3-3",
+      "Lv 8 · Aphelios"
+     ],
+     [
+      "3-6",
+      "Lv 9"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "METAsrc's Rapidfire Solar (S) Tocker's comp. Score counts surviving champions, fight speed, star levels, gold interest, item greed and close calls, so win fast, keep everyone alive and keep 50 gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1. Buy every Kayle, Xayah, Leona, Ornn and Sejuani and roll the gold above 50 at Lv 5 for Xayah, Leona and Ornn 3★ (1-costs)."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3 and roll above 50 for Kayle 3★ (Jeweled Gauntlet, Rabadon's, Guinsoo's). Xayah holds Guinsoo's and Kraken's, Ornn the tank items. Lv 7 at 2-9."
+     ],
+     [
+      "Stage 3",
+      "Lv 8 around 3-3 for Aphelios, Lv 9 at 3-6. Keep 50 gold for interest (Gold Interest scores every round); spend everything on the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "Kayle, Xayah, Ornn, Leona",
+    "emblem": "",
+    "items": [
+     [
+      "Kayle",
+      "Jeweled Gauntlet, Rabadon's Deathcap, Guinsoo's Rageblade",
+      []
+     ],
+     [
+      "Xayah",
+      "Guinsoo's Rageblade, Kraken's Fury, Kraken's Fury",
+      []
+     ],
+     [
+      "Ornn",
+      "Gargoyle Stoneplate, Spirit Visage, Warmog's Armor",
+      []
+     ],
+     [
+      "Leona",
+      "Evenshroud, Sunfire Cape",
+      []
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Tocker's Elderwood Ezreal (METAsrc)",
+   "tier": "S",
+   "custom": true,
+   "mode": "tockers",
+   "source": "METAsrc Tocker's Trials comps, Set 18 patch 18.5 (page you pasted, 2026-10-25); items from bunnymuffins' Elderwood Executioners and Kayle Reroll (Xayah).",
+   "units": [
+    "Ornn",
+    "Xayah",
+    "Alistar",
+    "LeBlanc",
+    "Hecarim",
+    "Fiddlesticks",
+    "Ezreal",
+    "Soraka",
+    "Gnar"
+   ],
+   "board": [
+    {
+     "unit": "Stonebark Tree",
+     "pos": 1,
+     "three": false,
+     "items": [],
+     "prop": true,
+     "icon": null
+    },
+    {
+     "unit": "Hecarim",
+     "pos": 3,
+     "three": true,
+     "items": [
+      "Protector's Vow",
+      "Crownguard",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_18_Hecarim.png"
+    },
+    {
+     "unit": "Alistar",
+     "pos": 4,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Alistar.png"
+    },
+    {
+     "unit": "Ornn",
+     "pos": 5,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Ornn.png"
+    },
+    {
+     "unit": "Stonebark Tree",
+     "pos": 7,
+     "three": false,
+     "items": [],
+     "prop": true,
+     "icon": null
+    },
+    {
+     "unit": "Gnar",
+     "pos": 11,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_GnarSmall.png"
+    },
+    {
+     "unit": "Fiddlesticks",
+     "pos": 12,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Fiddlesticks18.png"
+    },
+    {
+     "unit": "Ezreal",
+     "pos": 22,
+     "three": false,
+     "items": [
+      "Last Whisper",
+      "Spear of Shojin",
+      "Deathblade"
+     ],
+     "prop": false,
+     "icon": "DA_18_Ezreal.png"
+    },
+    {
+     "unit": "Soraka",
+     "pos": 24,
+     "three": false,
+     "items": [
+      "Adaptive Helm",
+      "Nashor's Tooth",
+      "Rabadon's Deathcap"
+     ],
+     "prop": false,
+     "icon": "DA_18_Soraka.png"
+    },
+    {
+     "unit": "Xayah",
+     "pos": 25,
+     "three": true,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Kraken's Fury"
+     ],
+     "prop": false,
+     "icon": "DA_18_Xayah.png"
+    },
+    {
+     "unit": "LeBlanc",
+     "pos": 26,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_LeBlanc.png"
+    },
+    {
+     "unit": "Lifebloom",
+     "pos": 28,
+     "three": false,
+     "items": [],
+     "prop": true,
+     "icon": null
+    }
+   ],
+   "carries": {
+    "Ezreal": [
+     "Last Whisper",
+     "Spear of Shojin",
+     "Deathblade"
+    ],
+    "Soraka": [
+     "Adaptive Helm",
+     "Nashor's Tooth",
+     "Rabadon's Deathcap"
+    ],
+    "Hecarim": [
+     "Protector's Vow",
+     "Crownguard",
+     "Warmog's Armor"
+    ],
+    "Xayah": [
+     "Guinsoo's Rageblade",
+     "Kraken's Fury"
+    ]
+   },
+   "main": "Ezreal",
+   "augments": [],
+   "notes": "Tocker's only. METAsrc's Tocker's Trials Elderwood Flora Fatalis (S) comp (Set 18, patch 18.5): Ornn, Xayah, Alistar, LeBlanc, Hecarim, Fiddlesticks, Ezreal, Soraka, Gnar. Their 'top 4' 100% measures runs survived, not score. Items from bunnymuffins' Elderwood Executioners and Kayle Reroll (Xayah); positions for Ornn, Xayah are a guess. S: your best Tocker's score, 825k (2026-10-26), past the 800k rank: 10 Elderwood with an Avatar Lux, Lv 8 at 3-3, Lv 9 by 3-8. Before that 769k (2026-10-25): no lives lost, Lv 8 at 2-10 (the plan's roll-down), Lv 9 by 3-8, Lv 10 at 3-10, 7 Elderwood with 4 Brawler.",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Ornn",
+     "items": []
+    },
+    {
+     "unit": "Xayah",
+     "items": []
+    },
+    {
+     "unit": "Alistar",
+     "items": []
+    },
+    {
+     "unit": "LeBlanc",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Level 8 / 4-cost carries",
+    "roll_at": "Level 8",
+    "when": "Tocker's: Lv 6 at 2-3 (LeBlanc, Alistar 3★), Lv 7 at 2-6 for Hecarim (Vow, Crownguard, Warmog's) and Fiddlesticks. Roll down at Lv 8 on 2-10 for Ezreal (Last Whisper, Shojin, Deathblade) and Soraka (Adaptive Helm, Nashor's, Rabadon's).",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls. Keep 50 gold for interest until the last round, 3-10. 600k is Legendary; the next rank is 800k.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5 · Xayah, Ornn 3★"
+     ],
+     [
+      "2-3",
+      "Lv 6 · LeBlanc, Alistar 3★"
+     ],
+     [
+      "2-6",
+      "Lv 7"
+     ],
+     [
+      "2-10",
+      "Lv 8 · roll down"
+     ],
+     [
+      "3-5",
+      "Lv 9 · Gnar"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "METAsrc's Elderwood Flora Fatalis (S) Tocker's comp. Score counts surviving champions, fight speed, star levels, gold interest, item greed and close calls, so win fast, keep everyone alive and keep 50 gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1. Buy every Xayah, Ornn, Alistar and LeBlanc and roll the gold above 50 at Lv 5 for Xayah and Ornn 3★. Have 3 Elderwood on the board by 1-9 for the Stonebark Tree and Lifebloom. 1-9 is 14 ranged archers, and their arrows weaken with every body they pass through, so put the trees in front. Stage 1 is the only place this build has lost lives."
+     ],
+     [
+      "Stage 2",
+      "Keep items on the bench until 2-5 (that enemy is too hard without them), then tank items first, then Ezreal and Xayah. Lv 6 at 2-3 (LeBlanc, Alistar 3★), Lv 7 at 2-6 for Hecarim (Vow, Crownguard, Warmog's) and Fiddlesticks. Roll down at Lv 8 on 2-10 for Ezreal (Last Whisper, Shojin, Deathblade) and Soraka (Adaptive Helm, Nashor's, Rabadon's)."
+     ],
+     [
+      "Stage 3",
+      "Lv 9 around 3-5 for Gnar: 7 Elderwood. Keep 50 gold for interest (Gold Interest scores every round); spend everything on the last round, 3-10. The 3-10 boss is one huge dragon: make sure Ezreal has Last Whisper, which cuts armor. Xayah's feathers and Gnar cut armor too."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed is one of the score bonuses in the game files (it pops up as 'Item Greed +X' after a round), but spare components on your bench didn't seem to trigger it. Watch which rounds show that popup to see what it counts, e.g. unopened anvils."
+    ],
+    "holders": "Ezreal, Soraka, Hecarim, Xayah",
+    "emblem": "",
+    "items": [
+     [
+      "Ezreal",
+      "Last Whisper, Spear of Shojin, Deathblade",
+      []
+     ],
+     [
+      "Soraka",
+      "Adaptive Helm, Nashor's Tooth, Rabadon's Deathcap",
+      []
+     ],
+     [
+      "Hecarim",
+      "Protector's Vow, Crownguard, Warmog's Armor",
+      []
+     ],
+     [
+      "Xayah",
+      "Guinsoo's Rageblade, Kraken's Fury",
+      []
+     ]
+    ]
+   }
+  },
+  {
+   "name": "Tocker's Aphelios Flex (bunnymuffins)",
+   "tier": "B",
+   "custom": true,
+   "mode": "tockers",
+   "source": "Copy of bunnymuffins' Aphelios Flex — Standard (https://teamfight.lol/team-builder?set=18&comp=d5833462-ea7e-4ee0-90b1-69176b2d6cfb), converted to Tocker's on 2026-10-26.",
+   "units": [
+    "Amumu",
+    "Sentinel",
+    "Diana",
+    "Vi",
+    "Nidalee",
+    "Aphelios",
+    "Kog'Maw",
+    "Xayah"
+   ],
+   "board": [
+    {
+     "unit": "Amumu",
+     "pos": 3,
+     "three": false,
+     "items": [
+      "Crownguard",
+      "Gargoyle Stoneplate",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_Amumu18.png"
+    },
+    {
+     "unit": "Sentinel",
+     "pos": 4,
+     "three": false,
+     "items": [
+      "Protector's Vow",
+      "Protector's Vow",
+      "Adaptive Helm"
+     ],
+     "prop": false,
+     "icon": "DA_Sentinel18.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 10,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Vi",
+     "pos": 11,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_Vi18.png"
+    },
+    {
+     "unit": "Nidalee",
+     "pos": 15,
+     "three": false,
+     "items": [
+      "Sterak's Gage",
+      "Spear of Shojin",
+      "Infinity Edge"
+     ],
+     "prop": false,
+     "icon": "DA_Nidalee18_AP.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 22,
+     "three": false,
+     "items": [
+      "Infinity Edge",
+      "Kraken's Fury",
+      "Red Buff"
+     ],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    },
+    {
+     "unit": "Kog'Maw",
+     "pos": 23,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_KogMaw18_AD.png"
+    },
+    {
+     "unit": "Xayah",
+     "pos": 28,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Xayah.png"
+    }
+   ],
+   "carries": {
+    "Aphelios": [
+     "Infinity Edge",
+     "Kraken's Fury",
+     "Red Buff"
+    ],
+    "Nidalee": [
+     "Sterak's Gage",
+     "Spear of Shojin",
+     "Infinity Edge"
+    ],
+    "Sentinel": [
+     "Protector's Vow",
+     "Protector's Vow",
+     "Adaptive Helm"
+    ],
+    "Amumu": [
+     "Crownguard",
+     "Gargoyle Stoneplate",
+     "Warmog's Armor"
+    ]
+   },
+   "main": "Aphelios",
+   "must": {
+    "Nidalee": [
+     "Spear of Shojin"
+    ]
+   },
+   "augments": [
+    "Silver: Carve a Path, Focused Fire, Small Grab Bag",
+    "Gold: Swordsmith, Big Grab Bag",
+    "Prismatic: Sword Overflow"
+   ],
+   "notes": "Tocker's only; B until you've played it. Vanguard 4 + Rapidfire 5. Go 5 Rapidfire if you have a Rapidfire Emblem. Brambleback needs 2 of Sterak's / Edge of Night / QSS. Sentinel is a Riftbeast unit, here as a tank (not the Riftbeast trait). Varus swapped for Xayah (your call, 2026-10-26): she keeps Rapidfire 2 for Aphelios and her feathers cut armor.",
+   "plan": {
+    "style": "Level 8 / 4-cost carries",
+    "roll_at": "Level 8",
+    "when": "Tocker's: Lv 5 at 2-1, Lv 6 at 2-3, Lv 7 at 2-6, then roll down at Lv 8 on 2-10 for Aphelios, Sentinel and Nidalee 2★, and 3★ them at 9: nobody else takes copies. Lv 9 around 3-5 for Alune or Lux.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Score (game files): Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed, Close Calls. A board that wins quickly with everyone alive scores more than one that scrapes through. Keep 50 gold for interest until the last round, 3-10.",
+    "leveling": [
+     [
+      "2-1",
+      "Lv 5"
+     ],
+     [
+      "2-3",
+      "Lv 6"
+     ],
+     [
+      "2-6",
+      "Lv 7"
+     ],
+     [
+      "2-10",
+      "Lv 8 · roll down: Aphelios, Sentinel, Nidalee"
+     ],
+     [
+      "3-5",
+      "Lv 9 · Alune or Lux"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "Tocker's copy of bunnymuffins' Aphelios Flex: same board and items, Tocker's leveling and stages. Aphelios is the gameplan when you have a good AD opener but can't quite bridge the gap to level 9 and play for Draven. He is a great AD default and uses most items decently. Nidalee is the best duo carry but Brambleback can work, specially if you have a Rapidfire Emblem.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP gets you to Lv 5 by 2-1. Play a strong opener around attack damage and attack speed units, but keep the items on the bench until 2-5 (Item Greed): the guide's early Guinsoo's slam is for lobbies. 1-9 is 14 ranged archers: field as many units as you can."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-3, Lv 7 at 2-6. 2-2 (Rammus) and 2-4 (Elise) have to be won without items. At 2-5 items go on: tank items first on Sentinel or Amumu (Vow, Crownguard, Gargoyle's, Warmog's), Aphelios's (Infinity Edge, Kraken's Fury, Red Buff) on him, or on an attack-damage holder until he arrives (the guide's holders: Xayah, Camille). Roll down at Lv 8 on 2-10 for Aphelios, Sentinel and Nidalee 2★."
+     ],
+     [
+      "Stage 3",
+      "3★ Aphelios and Nidalee at Lv 8–9 (the pool is all yours); Nidalee needs Spear of Shojin. Lv 9 around 3-5 for Alune or Lux. The 3-10 boss is one huge target: Aphelios and Nidalee's items carry it. Spend all your gold on 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one. After a loss, roll for upgrades before the next fight.",
+     "Item Greed: every item on your bench scores 2,500 a round. The KEEP / EQUIP line shows which to put on.",
+     "If you fully miss on Sentinel, Amumu + Juggernauts can hold the front line down. The goal is to have enough stall to protect Nidalee as she resets.",
+     "Guinsoo's on Aphelios is not BIS, Red Buff is. However, Guinsoo's is more than acceptable and should be slammed for tempo in stage 2. His itemization is very flexible as long as he has",
+     "The Nidalee variant has the added advantage of not needing sunder due to Kog'Maw's passive.",
+     "Nidalee has a lot of scam potential if you position her towards the enemy weakside. If you can get both Aphelios and Nidalee on a weak front liner on stage 4 you can win fights for free.",
+     "Nidalee and Brambleback are both very dependent on their core items. Nidalee needs Shojin while Brambleback needs at least 2 defensive items.",
+     "If you have Rapidfire Emblem play 5 Rapidfire instead with the emblem on Brambleback. Position on weakside to get as many resets on Brambleback as possible.",
+     "Amumu takes pure tank items, Sentinel likes mana tank items like Vow."
+    ],
+    "holders": "Cinderling, Xayah, Camille",
+    "emblem": "Rapidfire Brambleback",
+    "items": [
+     [
+      "Aphelios",
+      "IE, Red Buff, Kraken (Guinsoo's, Deathblade, Last Whisper, Giant Slayer)",
+      []
+     ],
+     [
+      "Nidalee",
+      "Shojin*, IE, Sterak's (Deathblade, Hand of Justice)",
+      [
+       "Shojin"
+      ]
+     ],
+     [
+      "Brambleback",
+      "Sterak's*, Edge of Night*, QSS* (2/3 required, ideally all 3)",
+      [
+       "Sterak's",
+       "Edge of Night",
+       "QSS"
+      ]
+     ],
+     [
+      "Sentinel",
+      "Vow, Adaptive Helm, Warmogs",
+      []
+     ],
+     [
+      "Amumu",
+      "Crownguard, Gargoyle's, Warmogs",
+      []
+     ]
+    ],
+    "augments": [
+     [
+      "BIS",
+      "Sword Overflow, Swordsmith, Carve a Path, Bronze 4 Life"
+     ],
+     [
+      "General",
+      "Item > Trait > Econ > Combat"
+     ]
+    ]
+   }
   }
  ]
 }

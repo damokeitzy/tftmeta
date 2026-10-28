@@ -62,6 +62,16 @@ class ItemReader:
             img = cv2.imread(str(path), cv2.IMREAD_COLOR)
             if img is not None:
                 self.icons[api] = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # Radiant items have their own art but finish the item they upgrade: matched with their own icon,
+        # reported as the normal item (a Radiant Deathblade is a finished Deathblade)
+        self.base = {}
+        radiant = DATA / "radiant.json"
+        if radiant.exists():
+            for api, it in json.loads(radiant.read_text(encoding="utf8")).items():
+                img = cv2.imread(str(DATA / "icons" / it["icon"]), cv2.IMREAD_COLOR)
+                if img is not None and it["of"] in self.items:
+                    self.icons[api] = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                    self.base[api] = it["of"]
         self._cache = {}
 
     def _templates(self, size):
@@ -95,6 +105,7 @@ class ItemReader:
                 best, second = (api, s), best[1]
             elif s > second:
                 second = s
+        best = (self.base.get(best[0], best[0]), best[1])  # Radiant -> the item it upgrades
         return (*best, best[1] - second) if margin else best
 
     def read_bench(self, frame):

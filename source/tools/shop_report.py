@@ -137,6 +137,12 @@ def main():
         for a, b in zip(rows, rows[1:]):
             if b["t"] - a["t"] > 20:  # not the same roll-down
                 continue
+            # a clean reroll only: 2 gold spent and nothing bought. The same shop logged twice (a slot misread one
+            # time) shares units in the same slots and counted as "repeats": z=+9 that was the logger, not the
+            # shop (2026-10-26; on clean rerolls repeats match luck)
+            if sum(1 for x, y in zip(a["shop"], b["shop"]) if x and x == y) >= 2 or \
+                    a.get("gold") is None or b.get("gold") is None or a["gold"] - b["gold"] != 2:
+                continue
             ua = {u for u, c in zip(a["shop"], a["costs"]) if c == cost}
             ub = [u for u, c in zip(b["shop"], b["costs"]) if c == cost]
             if not ua:

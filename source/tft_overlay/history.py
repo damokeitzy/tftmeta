@@ -18,6 +18,12 @@ HISTORY = DIR / "history.jsonl"
 CONTINUE_S = 15 * 60  # an overlay restart within this long carries on with the same game
 
 
+def _key(round_):
+    """'3-10' -> (3, 10): rounds in play order (as text '3-10' sorts before '3-8')."""
+    stage, _, n = round_.partition("-")
+    return (int(stage), int(n)) if stage.isdigit() and n.isdigit() else (0, 0)
+
+
 class GameLog:
     def __init__(self):
         DIR.mkdir(parents=True, exist_ok=True)
@@ -58,7 +64,7 @@ class GameLog:
             g = self.game = {"started": time.strftime("%Y-%m-%d %H:%M"), "first_round": round_,
                              "partial": round_ > "2-1", "rounds": {}, "augments": []}
         changed = round_ != g.get("last_round") or (augments is not None and augments != g["augments"])
-        g["last_round"] = max(round_, g.get("last_round", round_))
+        g["last_round"] = max(round_, g.get("last_round", round_), key=_key)  # Tocker's: 3-10 after 3-8
         if round_ not in g["rounds"] and hp is not None:
             g["rounds"][round_] = {"hp": hp, "level": level, "gold": gold}  # at the round's first read
         if build:

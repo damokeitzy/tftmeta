@@ -3,6 +3,7 @@ data/cdragon_tft.json for a new patch.
 
 - data/items.json:   components + completed items (recipes, icon files)
 - data/special.json: set artifacts etc. offered in the armory ({name: icon file})
+- data/radiant.json: Radiant items ({api: {name, icon, of: the item it upgrades}})
 - data/item_names.json: every offerable item name, for OCR matching of armory cards
 """
 import os
@@ -72,6 +73,18 @@ for api, i in by_api.items():
         special[i["name"]] = api + ".png"
         download(icon_url(i), ICONS / special[i["name"]])
 
+# Radiant items (Tocker's rewards, radiant augments): their own art, but they finish the item they upgrade,
+# so the item reader counts a Radiant Deathblade as Deathblade. This set's DA_ entry first, else the older one
+radiant = {}
+for base, it in items.items():
+    if base not in completed:
+        continue
+    found = sorted((a for a, i in by_api.items() if i.get("name") == "Radiant " + it["name"] and i.get("icon")),
+                   key=lambda a: not a.startswith("DA_"))
+    if found:
+        radiant[found[0]] = {"name": "Radiant " + it["name"], "icon": found[0] + ".png", "of": base}
+        download(icon_url(by_api[found[0]]), ICONS / radiant[found[0]]["icon"])
+
 # real items only (augments/consumables are excluded so their pick screens aren't mistaken
 # for an item choice)
 names = sorted({it["name"] for it in items.values()} | set(special) |
@@ -110,6 +123,7 @@ for i in dump["items"]:
 (ROOT / "data" / "item_stats.json").write_text(json.dumps(stats, indent=1), encoding="utf8")
 (ROOT / "data" / "items.json").write_text(json.dumps(items, indent=1), encoding="utf8")
 (ROOT / "data" / "special.json").write_text(json.dumps(special, indent=1), encoding="utf8")
+(ROOT / "data" / "radiant.json").write_text(json.dumps(radiant, indent=1), encoding="utf8")
 (ROOT / "data" / "item_names.json").write_text(json.dumps(names, indent=1), encoding="utf8")
 print(f"{len(component_ids)} components, {len(completed)} completed, {len(special)} artifacts, "
-      f"{len(names)} names")
+      f"{len(radiant)} radiant, {len(names)} names")

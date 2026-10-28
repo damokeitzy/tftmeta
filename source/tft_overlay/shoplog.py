@@ -13,6 +13,7 @@ import re
 import time
 from pathlib import Path
 
+import cv2
 import numpy as np
 
 from .hud import LAYOUTS, dx, set_dx, shift
@@ -28,6 +29,13 @@ ODDS = (0.285, 0.815, 0.450, 0.850)    # "30% 40% 25% 5% 0%"
 GOLD = (0.515, 0.815, 0.565, 0.850)    # "25"
 # the logger only grabs this band of the screen (shop + level/odds/gold bar) each tick
 BAND = (0.12, 0.81, 0.82, 1.0)  # wide enough for both bottom-bar layouts (hud.py)
+# A card's upgrade marker: stars at the left end of its top edge when buying it completes a star-up — ★★ you
+# hold two 1★ copies, ★★★ two 2★ and two 1★ (8 copies). The game counts every copy you hold (carousel, orbs,
+# augments), so it fills in what purchases miss. (Stars dim, not gone, when you can't afford the card.)
+STARS = (0.285, 0.848, 0.815, 0.878)   # the cards' top edges
+STAR_SIZE = 0.014                      # star edge, fraction of the frame height (15 px at 1080p)
+STAR_X0, STAR_STEP = 0.009, 0.0171     # first star's left edge from the card's left edge; star to star
+STAR_MIN = 0.65   # the ★★ on pc_live4 scores 0.82; card art and the cost gem stay under 0.55
 CHANGED = 6.0     # mean abs pixel diff of the names strip that counts as a new shop
 QUIET_S = 3.0     # read pending shops after this long without changes
 MAX_PENDING = 80
@@ -40,6 +48,21 @@ def is_new_shop(prev, shop):
     if any(a and b and a != b for a, b in zip(prev, shop)):
         return True
     return sum(1 for u in shop if u) > sum(1 for u in prev if u)
+
+
+_STARS = {}
+
+
+def _star(size):
+    """A filled 5-point star, size x size, white on black (the shape of a card's upgrade-marker star)."""
+    if size not in _STARS:
+        img = np.zeros((size, size), np.uint8)
+        c = (size - 1) / 2
+        pts = [(c + (c if i % 2 == 0 else c * 0.42) * np.cos(-np.pi / 2 + i * np.pi / 5),
+                c + 0.1 + (c if i % 2 == 0 else c * 0.42) * np.sin(-np.pi / 2 + i * np.pi / 5)) for i in range(10)]
+        cv2.fillPoly(img, [np.round(np.array(pts) * 8).astype(np.int32)], 255, lineType=cv2.LINE_AA, shift=3)
+        _STARS[size] = img
+    return _STARS[size]
 
 
 class ShopLogger:
@@ -55,6 +78,7 @@ class ShopLogger:
         self.pending = []          # (t, round, names_img, level_img, odds_img, gold_img)
         self.last_shop = None      # last logged shop (list of 5 names/None)
         self.owned = {}            # unit -> copies bought this game (approximate: sells aren't seen)
+        self.held = {}             # unit -> (copies, time): what its card's upgrade marker said, + buys since
         self.complete = False      # saw this game from stage 1: a unit missing from `owned` wasn't bought
         self.seen = Counter()      # unit -> times it appeared in a logged shop this game
         self.slots = Counter()     # cost -> shop slots of that cost logged this game
@@ -102,7 +126,63 @@ class ShopLogger:
                 if sum(1 for n in other if n) >= 2 and sum(1 for n in other if n) > sum(1 for n in best if n):
                     set_dx(d)
                     best = other
+        self._note_stars(best, self.card_stars(band), time.time())
         return best
+
+    def card_stars(self, band, d=None):
+        """Stars in each card's upgrade marker (STARS): 2 or 3, 0 for none. Template matching on a tiny strip,
+        well under a millisecond."""
+        strip = cv2.cvtColor(np.ascontiguousarray(self._sub(band, STARS, d)), cv2.COLOR_RGB2GRAY)
+        h = band.shape[0] / (BAND[3] - BAND[1])  # frame height
+        size = max(7, round(h * STAR_SIZE))
+        x0, step, jit = h * STAR_X0, h * STAR_STEP, max(2, round(h * 0.004))
+        if strip.shape[0] < size + 2:
+            return [0] * 5
+        tpl = _star(size)
+        w = strip.shape[1]
+        out = []
+        for k in range(5):
+            left = int(k * w / 5)
+            cell = strip[:, left:left + int(x0 + 2 * step + size + jit + 1)]
+            if cell.shape[1] < size + 1:
+                out.append(0)
+                continue
+            res = cv2.matchTemplate(cell, tpl, cv2.TM_CCOEFF_NORMED)
+            n = 0
+            for i in range(3):  # left-aligned stars: count them until a spot has none
+                x = round(x0 + i * step)
+                spot = res[:, max(0, x - jit):x + jit + 1]
+                if spot.size == 0 or spot.max() < STAR_MIN:
+                    break
+                n += 1
+            out.append(n if n >= 2 else 0)
+        return out
+
+    def _note_stars(self, shop, stars, t):
+        """What the cards' upgrade markers say you hold: ★★★ = 8 copies, ★★ = 2 (5 once you've bought 3+).
+        Below 9, a marker shows exactly when the count is 2, 5 or 8. No marker where we expected one: the ★★★
+        gone means you got the 9th (its purchase may not be logged yet — this read comes after it, so it isn't
+        counted twice); another one gone: back to the purchases."""
+        for u, n in zip(shop, stars):
+            if not u:
+                continue
+            prev = self.held.get(u, (0, 0))[0]
+            if n == 3:
+                self.held[u] = (8, t)
+            elif n == 2:
+                self.held[u] = (5 if max(prev, self.owned.get(u, 0)) >= 3 else 2, t)
+            elif prev == 8:
+                self.held[u] = (9, t)
+            elif prev in (2, 5):
+                del self.held[u]
+
+    def copies(self):
+        """unit -> copies you hold: your purchases, or what its card's marker said plus what you bought after
+        (carousel / orb / augment copies show there), whichever is more."""
+        out = dict(self.owned)
+        for u, (n, _) in self.held.items():
+            out[u] = max(out.get(u, 0), n)
+        return out
 
     def _names(self, band, d):
         strip = self._sub(band, NAMES, d)
@@ -147,7 +227,7 @@ class ShopLogger:
 
     def _read(self, t, round_, names_img, level_img, odds_img, gold_img):
         if round_ and self._game_round and round_.startswith("1-") and self._game_round >= "2-1":
-            self.owned, self.last_shop = {}, None  # new game
+            self.owned, self.held, self.last_shop = {}, {}, None  # new game
             self.seen, self.slots = Counter(), Counter()
             self.complete = False
         if round_:
@@ -167,6 +247,8 @@ class ShopLogger:
             for i, u in enumerate(self.last_shop):
                 if u and shop[i] is None:
                     self.owned[u] = self.owned.get(u, 0) + 1
+                    if u in self.held and t > self.held[u][1]:  # bought after its card's marker was read
+                        self.held[u] = (self.held[u][0] + 1, t)
             self.last_shop = [u if shop[i] else None for i, u in enumerate(self.last_shop)]
             return None
         self.last_shop = shop

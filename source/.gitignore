@@ -3,6 +3,8 @@ config.json
 data/games/
 data/shop_log/
 data/overlay_errors.log
+data/round_unread.png
+data/tockers/
 tests/fixtures/
 
 # --- Riot's game data and icons: downloaded from Community Dragon at startup (tools/update_game_data.py) ---
@@ -11,6 +13,7 @@ data/game_data_version.json
 data/set.json
 data/items.json
 data/item_names.json
+data/radiant.json
 data/augments.json
 data/augment_names.json
 data/augment_icons.json

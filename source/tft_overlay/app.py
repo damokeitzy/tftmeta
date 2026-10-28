@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageEnhance, ImageTk
 
-from .capture import Capturer
+from .capture import Capturer, describe_windows
 from .gamedata import DATA, OTHER_GUIDES, STATS_FILE, load_comps, load_set, load_special
 from .board_draw import board_height, draw_hex_board
 from .augment_lamp import AugmentLamp
@@ -31,7 +31,7 @@ from .history import GameLog
 from .augments import rank_augments
 from .hud import shift
 from .econ import GOLD as GOLD_REGION, LVL as LVL_REGION, advise, read_econ
-from .plans import make_plan
+from .plans import make_plan, tockers_plan
 from .guide import board_order, key_traits
 from .items import ItemReader
 from .matcher import needs_text, score as score_comp, strength, suggest, unmet
@@ -40,11 +40,26 @@ from .roster import is_reroll, missing_carries, on_board, why_missing
 from .scout import Scout
 from .shoplog import BAND as SHOP_BAND, ShopLogger
 from .slams import ItemBook, fill, main_tank, rank_picks, split_held, unit_partials
+from .tockershots import TockerShots
+from .pauselog import PauseLog
+from .greed import advise as greed_advise
+from .watchdog import Watchdog
 from .ui_common import (ACCENT, BG, CARD, COST_COLOR, DIM, FG, GREEN, ROOT, TIER_COLOR, IconCache, tier_rank,
                         clamp_to_screen, load_config, mix, monitor_rect, save_config)
 
 PANEL_H = 84
 GENERAL_PLAN = make_plan("", 4)  # no build pinned: standard leveling (4 at 2-1 ... 8 at 4-1) and econ
+
+
+def round_key(round_):
+    """'2-10' -> (2, 10), so rounds sort in play order (as text, Tocker's '1-10' would come before '1-2')."""
+    m = re.match(r"(\d)-(\d+)", round_ or "")
+    return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+
+
+def tockers_status(hp):
+    """Status line part in Tocker's Trials: the HP number there is your lives (3 to start, rewards add more)."""
+    return " · Tocker’s" + (f" · {hp} {'life' if hp == 1 else 'lives'}" if hp and 1 <= hp <= 9 else "")
 
 
 def is_carousel(round_):
@@ -94,6 +109,9 @@ NO_GAME = {"round": None, "traits": {}, "shop": [], "bench": [], "held": [], "he
            "offers": [], "econ": {}, "slots": []}
 
 
+COMBAT_BANNER = (0.40, 0.11, 0.60, 0.19)  # where TFT shows "Combat" as a fight starts
+
+
 class Worker(threading.Thread):
     """Captures + reads on a background thread so the UI never blocks."""
 
@@ -123,6 +141,22 @@ class Worker(threading.Thread):
         self._hp_start = {}        # round -> your HP at its first read (before its combat), this game
         self._hp_ok = None         # last HP read that made sense, and a jump waiting for a second read
         self._hp_odd = None
+        self._round_now, self._round_t0 = None, None  # the round on screen and when it started (planning first)
+        self._combat_round = None  # the round whose "Combat" banner was seen: combat until the next round
+        self._level = None         # your level at the last read (late game: the popup skips cheap units)
+        self.tockers = False       # this game is Tocker's Trials (PvE): its own leveling, econ and builds
+        self._tockers_seen = set() # rounds only Tocker's has, seen this game
+        # read loop stuck 30s: every thread's stack into the error log; also notes the game window lost / found
+        self.watchdog = Watchdog(ROOT / "data" / "overlay_errors.log")
+
+    def in_planning(self):
+        """True during a round's planning phase: the first `planning_s` seconds (config, default 30) after the
+        round number changed. Combat follows, and the BUY popup stays out of the fight then."""
+        if self._round_now and self._combat_round == self._round_now:
+            return False  # TFT's "Combat" banner showed this round
+        if self.tockers:
+            return True  # Tocker's has no planning timer: planning lasts until you start the fight
+        return self._round_t0 is None or time.time() - self._round_t0 < self.cfg.get("planning_s", 30)
 
     def dismiss_offer(self):
         """'Keep my build': drop the pivot offer."""
@@ -151,7 +185,10 @@ class Worker(threading.Thread):
         cap = self.source or Capturer()
         lamp = AugmentLamp()
         last_round, schedule, last_full = None, [], 0.0
+        next_banner = 0.0  # next look for the "Combat" banner
         gone_since = None  # when the TFT window disappeared (the game history closes the game after 2 min)
+        lost_logged = False  # mid-game: the window's been gone 15s and the error log says what windows there were
+        unread_since, unread_logged = None, False  # window there but no round label: since when, logged
         previewed = None  # no game running: the pinned build last shown (menu pick between games)
         reading = None  # last full read: dict of everything seen on screen
         carousel_reads = deque(maxlen=2)  # carousel: what's still there (last 2 reads)
@@ -162,6 +199,11 @@ class Worker(threading.Thread):
         # game; it also writes the shop log (tools/shop_report.py) when live and enabled
         shoplog = ShopLogger(reader, set_data["champions"],
                              log=self.cfg.get("shop_log", True) and not self.source)
+        # Tocker's Trials: the enemy board each round -> data/tockers/<run>/ (live only)
+        shots = TockerShots(DATA / "tockers", keep=self.cfg.get("tockers_shots_keep", 8)) \
+            if self.cfg.get("tockers_shots", True) and not self.source else None
+        # ...and every 2s of each fight: the fight clock, board movement, overlay / PC load -> fights.jsonl
+        pauses = PauseLog(reader) if shots and self.cfg.get("tockers_pause_log", True) else None
         tick = 0.4
         # opponent tracking: notices when you scout someone and stores their traits
         scout = Scout(reader, comps, set_data["champions"], self.cfg.get("player_name")) \
@@ -170,11 +212,13 @@ class Worker(threading.Thread):
         shown_comp = [None]  # comp on the board right now
         watch_last = [None]  # thumbnails of the watched regions at the last full read
 
-        def watch_thumb():
+        def watch_thumb(round_=None):
             """Traits panel (+ item bench), augment cards, gold and level, small: when any of them
-            changes you bought / placed / slammed / rerolled something, so read again now."""
+            changes you bought / placed / slammed / rerolled something, so read again now. The augment
+            cards sit mid-board, where units are always moving: watched only on augment rounds."""
             parts = []
-            for reg in (TRAIT_REGION, AUGMENT_REGION, shift(GOLD_REGION), shift(LVL_REGION)):
+            aug = [AUGMENT_REGION] if round_ in ("2-1", "3-2", "4-2") or not round_ else []
+            for reg in [TRAIT_REGION] + aug + [shift(GOLD_REGION), shift(LVL_REGION)]:
                 img = cap.grab(reg)
                 if img is None:
                     return None
@@ -218,7 +262,7 @@ class Worker(threading.Thread):
         def full_read(frame, round_):
             who = scout.learn(frame) if scout else None  # lobby names + which board label is you
             traits = reader.read_traits(frame)
-            if who and reading and traits == reading.get("traits"):
+            if who and reading and (traits == reading.get("traits") or scout.looks_like_mine(traits)):
                 # "their" board has exactly your traits: it's yours, with your label hidden (augment
                 # screen, combat). Never store your own board as an opponent's
                 who = scout.on_opponent = None
@@ -272,8 +316,9 @@ class Worker(threading.Thread):
             # the augment you took: every offer seen on this augment screen (rerolls too) until one of
             # them shows up in the box above your lamp
             if phase == "augment":
-                if self._aug_offers[0] != round_:
-                    self._aug_offers = (round_, [])
+                if self._aug_offers[0] != round_ or not self.aug_history:  # (the history may have been reset
+                    if self._aug_offers[0] != round_:                     # mid-screen: start an entry again)
+                        self._aug_offers = (round_, [])
                     self.aug_history.append({"round": round_, "offered": [], "took": None})
                 self._aug_offers[1].extend(a for a in offers if a not in self._aug_offers[1])
                 self.aug_history[-1]["offered"] = list(self._aug_offers[1])
@@ -325,12 +370,12 @@ class Worker(threading.Thread):
             return out
 
         def uses(comp):
-            held = [u for u in comp["units"] if (shoplog.owned or {}).get(u) or u in self.manual] \
+            held = [u for u in comp["units"] if shoplog.copies().get(u) or u in self.manual] \
                 if not self.source else []
             return f" — uses your {', '.join(held[:4])}" if held else " — build around the units you hold"
 
         def reroll_progress(comp, bought):
-            """[(unit, copies bought)] for a reroll comp's 3★ targets, else []: its main carry plus the one
+            """[(unit, copies held)] for a reroll comp's 3★ targets, else []: its main carry plus the one
             other 3★ unit you're furthest along on. Guides mark up to five 3★ units; chasing them all
             (45 copies) locks your bench and your levels."""
             if bought is None or not is_reroll(comp):
@@ -348,17 +393,35 @@ class Worker(threading.Thread):
 
         def still_needed(u):
             """Whether another copy helps: up to 9 for units the pinned build's guide has at 3★, else 3 for a
-            2★ — past that a copy just fills the bench. Counts what you've bought."""
-            have = max((shoplog.owned or {}).get(u, 0), 1 if u in self.manual else 0)
+            2★ — past that a copy just fills the bench. Counts what you hold (shoplog.copies)."""
+            have = max(shoplog.copies().get(u, 0), 1 if u in self.manual else 0)
             return have < self._buy_cap.get(u, 3)
+
+        def near_3star():
+            """4- and 5-costs you're one or two copies off 3★ with (7–8 of 9 held, e.g. two 2★ and two 1★). Held =
+            bought, or 8 when the champion's shop card shows ★★★ (carousel / orb / augment copies count there)."""
+            champs = set_data["champions"]
+            return [u for u, n in shoplog.copies().items() if champs.get(u, {}).get("cost", 0) >= 4 and 7 <= n < 9]
 
         def buys_now(shop):
             """The shop units to flash BUY: on a pinned build's board, else only safe buys — and only while
-            you still need copies."""
+            you still need copies. Close to a 3★ 4/5-cost: only that one."""
+            near = near_3star()
+            if near:
+                return [u for u in shop if u in near]
             return [u for u in shop if (self._buy_ok is None or u in self._buy_ok) and still_needed(u)]
 
         def popup_units():
-            return [u for u in self._buy_units if still_needed(u)]
+            """Units for the BUY popup; from level 8 only 4- and 5-costs (cheap units don't matter by then). One or
+            two copies off a 3★ 4- or 5-cost (7–8 of 9, e.g. two 2★ and two 1★): only that champion, so the gold
+            waits for it instead of going on anything else."""
+            champs = set_data["champions"]
+            near = near_3star()
+            if near:
+                return near
+            late = (self._level or 0) >= 8 and not self.tockers  # Tocker's: cheap 3★s still score at 8
+            return [u for u in self._buy_units if still_needed(u)
+                    and not (late and champs.get(u, {}).get("cost", 5) <= 3)]
 
         def bench_priority(comp, bought):
             """What to hold for a reroll build, most important first: the 3★ targets (main carry + one, 9
@@ -372,9 +435,17 @@ class Worker(threading.Thread):
             rest = [u for u in board_order(comp, set_data) if u not in names and champs.get(u, {}).get("cost", 9) <= 3]
             return " · ".join([f"{u} {min(n, 9)}/9" for u, n in targets] + [f"{u} ×3" for u in rest[:4]])
 
+        def plan_of(comp):
+            """The comp's plan; in Tocker's Trials, in Tocker's rounds (a Tocker's build has its own)."""
+            plan = comp.get("plan")
+            return tockers_plan(plan) if self.tockers and plan and comp.get("mode") != "tockers" else plan
+
+        def general_plan():
+            return tockers_plan(GENERAL_PLAN) if self.tockers else GENERAL_PLAN
+
         def plan_now(comp):
             """The comp's plan; for reroll comps, levels past the roll level wait for the 3★s."""
-            plan = comp.get("plan")
+            plan = plan_of(comp)
             if not plan or not is_reroll(comp):
                 return plan
             m = re.search(r"(\d+)", plan.get("roll_at", ""))
@@ -407,11 +478,13 @@ class Worker(threading.Thread):
             if m != comps_mtime[0]:
                 comps_mtime[0] = m
                 comps[:] = load_comps()
-            # purchases this game, plus units you said you have. "Not bought" only means "don't have"
-            # when the overlay saw the game from stage 1 — after a restart, only traits/your word count
+            # copies you hold this game (purchases, or a shop card's upgrade marker), plus units you said you
+            # have. "Not bought" only means "don't have" when the overlay saw the game from stage 1 — after a
+            # restart, only traits/your word count
             bought = None
             if not self.source and not preview and (shoplog.complete or self.manual):
-                bought = dict(shoplog.owned, **{u: max(1, shoplog.owned.get(u, 0)) for u in self.manual})
+                have = shoplog.copies()
+                bought = dict(have, **{u: max(1, have.get(u, 0)) for u in self.manual})
             pool = (shoplog.seen, shoplog.slots) if not self.source and not preview else None
             have_now = have_tokens([x for u in r["held_units"] for x in u] + list(r["bench"]) +
                                    (list(r["offers"]) if r["phase"] == "armory" else []))
@@ -433,10 +506,15 @@ class Worker(threading.Thread):
                 have_now.add("gold:50")
             n_bows = sum(a == "TFT_Item_RecurveBow" for a in all_items)
             have_now |= {f"bows:{k}" for k in range(1, n_bows + 1)}
-            results = suggest(comps, r["traits"], r["shop"], set_data["champions"],
+            # Tocker's builds (score runs) only in Tocker's, or when you pinned one
+            offer = [c for c in comps if not c.get("hidden")
+                     and (c.get("mode") != "tockers" or self.tockers or c["name"] == self.locked)]
+            results = suggest(offer, r["traits"], r["shop"], set_data["champions"],
                               bench=r["bench"], held=r["held_units"], book=book, top=None,
                               bought=bought, round_=r["round"], pool=pool, have=have_now)
             econ = r.get("econ") or {}
+            if econ.get("level"):
+                self._level = econ["level"]
             # an HP read that jumps (51 -> 3 -> 51: a misread) only counts once a second read agrees; a
             # fight takes at most ~35, healing adds a little
             raw = hp = econ.get("hp")
@@ -455,17 +533,12 @@ class Worker(threading.Thread):
             rnd = r["round"]
             if rnd and econ.get("hp") is not None and rnd not in self._hp_start:
                 self._hp_start[rnd] = econ["hp"]
-            prev = max((k for k in self._hp_start if k < rnd), default=None) if rnd in self._hp_start else None
+            prev = max((k for k in self._hp_start if round_key(k) < round_key(rnd)), key=round_key,
+                       default=None) if rnd in self._hp_start else None
             lost = self._hp_start[prev] - self._hp_start[rnd] if prev else 0
             if (econ.get("streak") or 0) > 0:
                 lost = 0  # on a win streak you won the last fight: whatever the HP read says, nothing was lost
             econ = dict(econ, hp_lost=lost if 0 < lost <= 50 else 0)
-            # the game history: this read of your board, your augments, the build you're on
-            if not self.source and results:
-                b = results[0]["comp"]
-                self.history.update(rnd, hp=hp, level=econ.get("level"), gold=econ.get("gold"),
-                                    build=b.get("guide_name") or b["name"], pinned=bool(self.locked),
-                                    traits=r["traits"], owned=dict(shoplog.owned or {}), augments=self.aug_history)
             # 1. you pick: until you pin a build (never automatically) the board shows the top candidate and
             #    the side panel the top 3, re-ranked every read as your units, items and emblems change
             locked = self.locked
@@ -483,6 +556,13 @@ class Worker(threading.Thread):
                     results.insert(0, prev)
             if results and not locked:
                 self._top, self._top_round = results[0]["comp"]["name"], r["round"]
+            # the game history: this read of your board, your augments, the build you're on (the pinned one,
+            # now first in results; it used to log the top suggestion before the pin was sorted first)
+            if not self.source and results:
+                b = results[0]["comp"]
+                self.history.update(rnd, hp=hp, level=econ.get("level"), gold=econ.get("gold"),
+                                    build=b.get("guide_name") or b["name"], pinned=bool(self.locked),
+                                    traits=r["traits"], owned=dict(shoplog.owned or {}), augments=self.aug_history)
             # unpinned, a shop unit only flashes BUY when it's in 2+ of the 3 builds on offer: a safe buy
             # whichever way you go. Pinned: your build's units
             self._buy_ok = None if locked else {
@@ -496,7 +576,7 @@ class Worker(threading.Thread):
             # 2. after that nothing changes except the live bits — and two decision points, each offered
             #    once and kept up until you decide: 2-5 with the build's core carry missing, and an
             #    augment that unlocks a better build you already have champions for
-            if self._offer and (self._offer[0][0] == locked or (r["round"] or "") > self._offer[1]):
+            if self._offer and (self._offer[0][0] == locked or round_key(r["round"]) > round_key(self._offer[1])):
                 self._offer = None  # you took it, or the moment has passed
             mine = results[0] if locked and results else None
             if mine and not self._offered_25 and (r["round"] or "") >= "2-5" and mine.get("missing_core"):
@@ -528,7 +608,7 @@ class Worker(threading.Thread):
                     self._aug_unlock = (best_aug[1], best_aug[0])
             pivot = self._offer[0] if self._offer and not preview else None
             mine_comp = results[0]["comp"] if results else None
-            contest = scout.contest(mine_comp, suggest_for) if scout and mine_comp and not preview else []
+            contest = scout.contest(mine_comp, suggest_for, r["round"]) if scout and mine_comp and not preview else []
             lobby = scout.lobby_summary(suggest_for) if scout and not preview else []
             results = results[:3]
             comp = results[0]["comp"]
@@ -602,6 +682,15 @@ class Worker(threading.Thread):
                 panel["flash"] = locate(a, wears.get(unit, unit))
             panel.pop("offers", None)
             panel.pop("best", None)
+            # Tocker's Item Greed: every item left on the bench scores 2,500 a round, so only the few the board
+            # needs go on (none until 2-5); the rest stay
+            greed = None
+            if self.tockers and not preview and not r["phase"]:
+                g = greed_advise(icomp, slots, list(r["bench"]), r["round"],
+                                 main_tank(dict(icomp, _tank_stable=False), book), book)
+                if g["keep"] or g["equip"]:
+                    greed = dict(g, keep=[(ic(a), book.short(a) if a in book.items else a) for a in g["keep"]],
+                                 equip=[(u, ic(a), book.short(a)) for u, a, _ in g["equip"]])
             item_fill = {unit: [(sl[0], ic(sl[2])) for sl in lst] for unit, lst in slots.items()}
             item_text = "  ".join(filter(None, [
                 ("Bench: " + ", ".join(book.short(a) for a in bench)) if bench else "",
@@ -628,8 +717,8 @@ class Worker(threading.Thread):
                 "shop": buys_now(r["shop"]),
                 # the plan / econ follow your build once you pin one; until then the standard plan, so they
                 # don't change every time the top candidate does
-                "plan": plan_now(comp) if locked else GENERAL_PLAN,
-                "plan_bm": comp.get("plan_bm") if locked else None,
+                "plan": plan_now(comp) if locked else general_plan(),
+                "plan_bm": comp.get("plan_bm") if locked and not self.tockers else None,  # lobby leveling
                 "guide": guide_now(comp, r["round"]) if locked else None,  # how to play it, this stage
                 "item_fill": item_fill,
                 "item_next": None,  # the board only shows what your champions hold
@@ -637,14 +726,15 @@ class Worker(threading.Thread):
             shown_comp[0] = comp
             progress = reroll_progress(comp, bought) if locked else []
             advice = None if r["phase"] or preview else advise(
-                econ, r["round"], comp.get("plan") if locked else GENERAL_PLAN, progress)
+                econ, r["round"], plan_of(comp) if locked else general_plan(), progress, tockers=self.tockers)
             if advice and pivot and advice[0].startswith("Strengthen"):  # say *what* to strengthen into
                 advice = (advice[0], f"Switch to {pivot[0].replace(' — Standard', '')} now: play its units you "
                                      f"hold and roll for 2★.")
             if econ.get("gold") is not None:
                 print(f"econ={econ} advice={advice}", flush=True)
             self.out.put({"status": "No game running — showing your pinned build" if preview else
-                          f"Round {r['round']} · read {time.strftime('%H:%M:%S')}",
+                          f"Round {r['round']}{tockers_status(econ.get('hp')) if self.tockers else ''} · read "
+                          f"{time.strftime('%H:%M:%S')}",
                           "traits": r["traits"], "items": item_text, "results": results,
                           "panel": panel, "board": board, "locked": locked, "advice": advice,
                           "pivot": pivot, "contest": contest, "lobby": lobby, "progress": progress,
@@ -652,6 +742,7 @@ class Worker(threading.Thread):
                           "needs": results[0].get("needs_text") if results and results[0].get("needs") else None,
                           # pinned reroll build: which units to hold (the rest of the bench is to sell)
                           "keep": bench_priority(comp, bought) if locked and not preview else "",
+                          "greed": greed,  # Tocker's: bench items to keep (2,500 a round each) and the few to equip
                           # the popup over the game's shop: the 5 cards and which units to flash on them
                           "slots": r.get("slots") or [], "buy_units": popup_units(),
                           "level": econ.get("level"), "round": r["round"],
@@ -660,8 +751,11 @@ class Worker(threading.Thread):
         # Poll only the round number (tiny grab, OCR skipped while it looks the same). Do a full
         # read when a new round starts, again once the board has settled, and on ⟳ — never
         # continuously, so the game keeps its CPU.
+        if not self.source:
+            self.watchdog.start()
         while True:
             try:
+                self.watchdog.beat()
                 if self.paused.is_set():
                     time.sleep(0.3)
                     continue
@@ -679,12 +773,40 @@ class Worker(threading.Thread):
                     self.out.put({"status": "No game running — showing your pinned build" if previewed
                                   else "Waiting for TFT window…"})
                     gone_since = gone_since or now
+                    if last_round and not lost_logged and now - gone_since > 15:
+                        # the overlay went quiet at 1-3 with nothing logged (2026-10-27). A game ending does
+                        # this too: one line per game
+                        lost_logged = True
+                        self.watchdog.note(f"game window gone 15s (last round {last_round}): "
+                                           + "; ".join(describe_windows()))
                     if now - gone_since > 120 and self.history.game:
                         self.history.finish()  # the game window's been gone 2 minutes: that game is over
                     time.sleep(self.cfg["interval_s"])
                     continue
+                if lost_logged:
+                    self.watchdog.note(f"game window back after {now - gone_since:.0f}s: "
+                                       + "; ".join(describe_windows()))
+                    lost_logged = False
                 gone_since = previewed = None
                 round_ = reader.read_round(small, cropped=True)
+                if round_:
+                    unread_since, unread_logged = None, False
+                elif last_round and not self.source:
+                    unread_since = unread_since or now
+                    if not unread_logged and now - unread_since > 60:  # the end screen does this too
+                        unread_logged = True
+                        Image.fromarray(small).save(ROOT / "data" / "round_unread.png")
+                        self.watchdog.note(f"round label unreadable 60s (last round {last_round}, crop saved to "
+                                           "data/round_unread.png): " + "; ".join(describe_windows()))
+                if round_ and round_ != self._round_now:  # a new round: its planning phase starts now
+                    self._round_now, self._round_t0 = round_, time.time()
+                # Tocker's has no planning timer: you can start the fight within seconds, so look sooner
+                if self._round_t0 and self._combat_round != self._round_now and \
+                        now - self._round_t0 > (3 if self.tockers else 8) and now >= next_banner:
+                    next_banner = now + 0.8  # the banner shows for ~2s: no need to OCR it every loop
+                    banner = cap.grab(COMBAT_BANNER)  # TFT flashes "Combat" over the board when the fight starts
+                    if banner is not None and "ombat" in (reader.text(banner, "combat") or "").lower():
+                        self._combat_round = self._round_now
                 new_game = round_ and round_.startswith("1-") and (last_round is None or last_round >= "2-1")
                 if self.locked and (new_game or self.locked not in {c["name"] for c in comps}):
                     # stage 1 (after a later round, or the first round this run sees): a pin from an earlier
@@ -702,8 +824,21 @@ class Worker(threading.Thread):
                     self.manual_items.clear()
                     self._items_ok.clear()
                     self._items_last.clear()
+                    self.tockers = False
+                    self._tockers_seen.clear()
                     if scout:
                         scout.reset()
+                if round_ and re.fullmatch(r"1-([5-9]|10)|\d-(8|9|10)", round_):
+                    # rounds only Tocker's Trials has (stage 1 past 1-4, any stage past x-7). Two of them, so
+                    # one misread doesn't switch the mode
+                    self._tockers_seen.add(round_)
+                    self.tockers = len(self._tockers_seen) >= 2
+                if shots:  # Tocker's: screenshots of the enemy board, to work out each round's damage later
+                    shots.tick(now, round_, bool(self._round_now) and self._combat_round == self._round_now,
+                               self.tockers, cap.grab, reading)
+                if pauses:
+                    pauses.tick(now, self.tockers and bool(self._round_now) and self._combat_round == self._round_now,
+                                round_ or last_round, shots.folder if not shots.off else None, cap.grab)
                 if round_ and round_ != last_round:
                     last_round = round_
                     carousel_reads.clear()
@@ -729,9 +864,10 @@ class Worker(threading.Thread):
                     schedule.append(now)  # round label unreadable: still read the screen every 8s
                 # react to what you do, not just to the round timer: re-read (at most every 1.5s)
                 # when the traits, item bench, augment cards, gold or level change
-                if reading is not None and not schedule and now - last_full > 1.5 and \
+                # never during a fight: units moving would trigger a full read every 1.5s (lag, 2026-10-26)
+                if reading is not None and not schedule and now - last_full > 1.5 and self.in_planning() and \
                         reading.get("phase") != "carousel" and not self.cfg.get("log_only"):
-                    wt = watch_thumb()
+                    wt = watch_thumb(round_ or last_round)
                     if wt is not None and watch_last[0] is not None and watch_changed(wt, watch_last[0]):
                         schedule.append(now)
                 if schedule and now >= schedule[0] and not self.cfg.get("log_only"):
@@ -741,7 +877,7 @@ class Worker(threading.Thread):
                     if frame is not None:
                         reading = full_read(frame, round_ or last_round)
                         publish(reading)
-                        watch_last[0] = watch_thumb()
+                        watch_last[0] = watch_thumb(round_ or last_round)
                 elif self.relock.is_set() and reading:  # build changed: re-advise from the last read
                     self.relock.clear()
                     publish(reading)
@@ -755,7 +891,7 @@ class Worker(threading.Thread):
                         carousel_reads.append(carousel_items(frame))
                         reading["offers"] = carousel_offers()
                         publish(reading)
-                if scout and not (reading and reading.get("phase") == "carousel"):
+                if scout and not self.tockers and not (reading and reading.get("phase") == "carousel"):  # PvE: no opponents
                     tp = cap.grab(TRAIT_REGION)
                     if tp is not None:
                         scout.tick(tp)
@@ -780,8 +916,7 @@ class Worker(threading.Thread):
             except Exception:  # a bad read (odd OCR text, a frame from another window) must never
                 # kill the overlay: log it, say so, keep going
                 import traceback
-                with (ROOT / "data" / "overlay_errors.log").open("a", encoding="utf8") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S ") + traceback.format_exc() + "\n")
+                self.watchdog.note(traceback.format_exc())
                 self.out.put({"status": "Read error (logged to data/overlay_errors.log) — still running"})
                 time.sleep(1)
 
@@ -1139,7 +1274,7 @@ class SidePanel:
 
     def update(self, msg):
         sig = json.dumps([msg.get("advice"), msg.get("pivot"), msg.get("contest"), msg.get("progress"), msg.get("needs"),
-                          msg.get("keep"),
+                          msg.get("keep"), msg.get("greed"),
                           [(r["comp"]["name"], r.get("missing_core")) for r in msg["results"][:3]],
                           msg.get("locked"), (msg.get("board") or {}).get("plan"), msg.get("level"),
                           msg.get("round"), (msg.get("board") or {}).get("plan_bm"), msg.get("streak"),
@@ -1155,6 +1290,7 @@ class SidePanel:
         self._bottom = self._height()
         self._bottom -= self._econ(msg.get("advice"))
         self._bottom -= self._keep(msg.get("keep"))
+        self._bottom -= self._greed(msg.get("greed"))
         strip_top = self._bottom
         if self.levels:
             self._bottom -= self._strip(*plan_args)  # leveling, compact: always room for it
@@ -1220,6 +1356,55 @@ class SidePanel:
                           font=self.F(9, "bold"), width=self.w, tags=("keep",))
         y = c.bbox(t)[3] + P(2)
         c.move("keep", 0, self._bottom - y)
+        return y
+
+    def _greed(self, g):
+        """Tocker's Item Greed, above the bench / gold lines: 'EQUIP [Last Whisper] → Ezreal' for the few items the
+        board needs this stage, then 'KEEP [icons] 6 × 2,500 = 15,000 a round · ≈225k by 3-10'. -> the height."""
+        if not g:
+            return 0
+        c, P = self.c, self.P
+        size, y = P(22), P(4)
+
+        def icon(x, file, label):
+            img = self.icons.get(file, size) if file else None
+            if img:
+                c.create_image(x, y, image=img, anchor="nw", tags=("greed",))
+            else:  # no art: a labelled tile
+                c.create_rectangle(x, y, x + size, y + size, fill=CARD, outline=DIM, tags=("greed",))
+                c.create_text(x + size / 2, y + size / 2, text=label[:4], fill=FG, font=self.F(6), tags=("greed",))
+            return x + size + P(3)
+
+        def label(x, text, color, size_=9):
+            t = c.create_text(x, y + size / 2, text=text, anchor="w", fill=color, font=self.F(size_, "bold"),
+                              tags=("greed",))
+            return c.bbox(t)[2] + P(6)
+
+        if g["equip"]:
+            x = label(0, "EQUIP", ACCENT)
+            for unit, file, name in g["equip"]:
+                x = label(icon(x, file, name), f"→ {unit}", FG, 8) + P(6)
+            y += size + P(6)
+        x = label(0, "KEEP", GREEN)
+        room = self.w - (P(200) if self.w >= P(520) else P(20))  # wide: the score text fits beside the icons
+        for file, name in g["keep"]:
+            if x + size > room:
+                x = label(x, "…", DIM)
+                break
+            x = icon(x, file, name)
+        n = len(g["keep"])
+        text = f"{n} × 2,500 = {g['per_round']:,} a round" if n else "nothing on the bench"
+        if g.get("from"):
+            text += f" · equip from {g['from']}"
+        elif n:
+            text += f" · ≈{g['by_end'] // 1000}k by 3-10"
+        t = c.create_text(x + P(4), y + size / 2, text=text, anchor="w", fill=GREEN, font=self.F(8, "bold"),
+                          tags=("greed",))
+        y += size + P(6)
+        if c.bbox(t)[2] > self.w:  # narrow panel (compact mode): the score goes on its own line
+            c.coords(t, P(4), y + P(6))
+            y += P(16)
+        c.move("greed", 0, self._bottom - y)
         return y
 
     def _econ(self, adv):
@@ -1368,9 +1553,12 @@ class SidePanel:
                 note = re.sub(r"Lv\s*\d+\s*·?\s*", "", what).replace("only once 3★ done", "after 3★").replace(
                     "slow roll above 50g", "slow roll").strip(" ·")
                 steps.append((int(m.group(1)) if m else None, stage, note))
-        due = None  # the step the plan expects by now (rounds as "3-5" compare as text)
+        due = None  # the step the plan expects by now ("3-5"; as numbers, so Tocker's "2-10" comes after "2-9")
+        num = lambda s: tuple(map(int, re.match(r"(\d)-(\d+)", s).groups())) if re.match(r"\d-\d", s) else s  # noqa: E731
         for k, (lv, stage, _) in enumerate(steps):
-            if round_ and stage.split("/")[0].split(" or ")[0].strip().rstrip("+") <= round_:
+            first = stage.split("/")[0].split(" or ")[0].strip().rstrip("+")
+            a, b = num(first), num(round_ or "")
+            if round_ and (a <= b if type(a) is type(b) else first <= round_):
                 due = k
         return title, steps, text, due
 
@@ -1514,12 +1702,14 @@ class ShopPopup:
     still drag units and scout), and it's hidden from screen capture so the readers never see it. Needs TFT in
     borderless / windowed mode."""
     KEY = "#010203"  # see-through colour
-    AREAS = {"center": (0.28, 0.33, 0.72, 0.57),   # the middle of your board, in a row (fractions of the game window)
+    AREAS = {"top": (0.28, 0.05, 0.72, 0.17),      # a row across the top of the arena: the enemy's half, empty while
+                                                   # you plan, so it never hides a unit you're itemising (default)
+             "center": (0.28, 0.33, 0.72, 0.57),   # the middle of your board (covers your units)
              "right": (0.862, 0.12, 0.985, 0.78)}  # over the player list, stacked
 
-    def __init__(self, root, at="center"):
+    def __init__(self, root, at="top"):
         self.row = at != "right"
-        self.AREA = self.AREAS["right" if at == "right" else "center"]
+        self.AREA = self.AREAS.get(at, self.AREAS["top"])
         self.top = tk.Toplevel(root)
         self.top.overrideredirect(True)
         self.top.attributes("-topmost", True)
@@ -1628,7 +1818,8 @@ class Overlay:
         root.geometry(f"{self.cfg['width']}x{self.cfg['height']}+{self.cfg['x']}+{self.cfg['y']}")
         # BUY hexagons in the middle of your board (live only; "shop_popup": false in config.json turns them off,
         # "shop_popup_at": "right" puts them back over the player list)
-        self.popup = ShopPopup(root, self.cfg.get("shop_popup_at", "center"))             if source is None and self.cfg.get("shop_popup", True) else None
+        self.popup = ShopPopup(root, self.cfg.get("shop_popup_at", "top")) \
+            if source is None and self.cfg.get("shop_popup", True) else None
 
         bar = tk.Frame(root, bg=BG)
         bar.pack(fill="x", padx=8, pady=(6, 2))
@@ -1683,7 +1874,7 @@ class Overlay:
         self.menu.delete(0, "end")
         self.menu.add_command(label="Auto (best fit)", command=lambda: self.lock(None))
         self.menu.add_separator()
-        for comp in sorted(self.comps, key=tier_rank):
+        for comp in sorted((c for c in self.comps if not c.get("hidden")), key=tier_rank):
             need = needs_text(comp, unmet(comp))  # what it needs before it's worth playing, in the list too
             need = (need if len(need) <= 48 else need[:46] + "…") if need else ""
             self.menu.add_command(label=f"{comp['tier']:<7} {comp.get('guide_name') or comp['name']}"
@@ -1911,10 +2102,12 @@ class Overlay:
         if self.worker.paused.is_set():
             self.worker.paused.clear()
             self.pause_btn.config(text="❚❚")
+            self.worker.watchdog.note("resumed (▶ pressed)")
         else:
             self.worker.paused.set()
             self.pause_btn.config(text="▶")
             self.status.config(text="Paused")
+            self.worker.watchdog.note("paused (❚❚ pressed): nothing is read until ▶")
 
     def quit(self):
         self.root.destroy()
@@ -1958,7 +2151,7 @@ class Overlay:
         if getattr(self, "levels", None):
             self.levels.update(msg)
         if self.popup:
-            self.popup.show(msg.get("slots"), msg.get("buy_units"), hide=self.worker.paused.is_set())
+            self.popup.show(msg.get("slots"), msg.get("buy_units"), hide=self.worker.paused.is_set() or not self.worker.in_planning())
 
     def poll(self):
         try:
@@ -1983,6 +2176,8 @@ class Overlay:
 
     def _poll(self):
         self._builds_changed()
+        if self.popup and not self.worker.in_planning():  # combat started: no BUY hexagons over the fight
+            self.popup.show(None, None, hide=True)
         msgs = []
         while not self.q.empty():
             msgs.append(self.q.get_nowait())
@@ -2002,7 +2197,7 @@ class Overlay:
         if shop is not None and getattr(self, "board_panel", None):
             self.board_panel.set_shop(shop["shop"])
         if shop is not None and self.popup:
-            self.popup.show(shop.get("slots"), shop.get("buy_units"), hide=self.worker.paused.is_set())
+            self.popup.show(shop.get("slots"), shop.get("buy_units"), hide=self.worker.paused.is_set() or not self.worker.in_planning())
 
     def animate(self):
         try:
@@ -2024,7 +2219,7 @@ class Overlay:
             env = dict(os.environ, PYTHONIOENCODING="utf8")  # else Windows pipes are cp1252: "—" breaks the read
             # first the game data (a new patch: champions, items, augments), then the guides built on it
             for guide, tool in (("Community Dragon", "update_game_data.py"), ("bunnymuffins", "import_teamfight.py"),
-                                ("TFT Academy", "import_tftacademy.py"), ("SeeMeta", "import_seemeta.py")):
+                                ("SeeMeta", "import_seemeta.py")):  # (TFT Academy dropped 2026-10-24: gimmicky)
                 self.q.put({"status": f"Checking {guide} for updates…"})
                 try:
                     r = subprocess.run([sys.executable, str(ROOT / "tools" / tool), "--sync"],

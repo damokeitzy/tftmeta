@@ -113,7 +113,7 @@ def snapshot_names(headings, champions):
     names, star = {}, {}
     seg = seg.split(" Meta ", 1)[-1]
     for group in re.split(r"(?:^|\s)(?:[SABC]|Special):", seg):  # "S: a, b *, c, A: d, ..."
-        for raw in group.split(","):
+        for raw in re.split(r",|(?<=\*)\s+(?=[A-Z])", group):  # "Veigar Reroll * Caitlyn Reroll": a missing comma
             alias = raw.strip()
             starred = alias.endswith("*")
             alias = alias.rstrip("* ").strip()

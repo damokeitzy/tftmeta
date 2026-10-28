@@ -58,7 +58,7 @@ def read_econ(reader, frame):
 
 
 def _stage(round_):
-    m = re.match(r"(\d)-(\d)", round_ or "")
+    m = re.match(r"(\d)-(\d+)", round_ or "")  # Tocker's Trials goes up to x-10
     return (int(m.group(1)), int(m.group(2))) if m else None
 
 
@@ -79,10 +79,11 @@ def roll_level(plan):
     return int(m.group(1)) if m else None
 
 
-def advise(econ, round_, plan, progress=None):
+def advise(econ, round_, plan, progress=None, tockers=False):
     """-> (headline, detail) or None when there's not enough on screen to say anything.
     progress: [(unit, copies bought)] for a reroll comp's cheap carries — no leveling past the roll
-    level until they're 3★ (9 copies). econ["hp_lost"]: HP the last combat cost (the app tracks it)."""
+    level until they're 3★ (9 copies). econ["hp_lost"]: HP the last combat cost (the app tracks it).
+    tockers: Tocker's Trials — three lives instead of HP, no streaks, the run ends at 3-10."""
     gold, level, hp, streak = econ.get("gold"), econ.get("level"), econ.get("hp"), econ.get("streak") or 0
     lost = econ.get("hp_lost") or 0
     if gold is None or level is None:
@@ -98,6 +99,22 @@ def advise(econ, round_, plan, progress=None):
     reroll = "Reroll" in style or "reroll" in style.lower()
     rl = roll_level(plan)
     tgt = target_level(plan, round_)
+
+    # Tocker's Trials: no 100 HP, three lives (the HP number shows them) and a lost round costs one; no streaks.
+    # Interest scores every round (the game's "Gold Interest" bonus), so the 50-gold rules below stand until
+    # the last round, 3-10, which spends it all. The HP and streak rules below don't apply
+    if tockers:
+        lives = hp if hp and 1 <= hp <= 9 else None  # 3 to start; rewards can add more (4-5 seen)
+        if lives == 1:
+            return ("Last life: roll for upgrades", f"{gold}g: one more lost round ends the run. Roll for 2★/3★ "
+                                                    f"upgrades now, and level if it adds a unit.")
+        if st >= (3, 10):
+            return ("Last round: spend it all", f"{gold}g: no interest after this one. Roll for star-ups (star "
+                                                f"levels score) and level if it adds a unit.")
+        if lives and lost >= 1:
+            return ("Lost a life: roll for upgrades", f"{lives} lives left. Roll for 2★ upgrades before the next "
+                                                      f"fight: a stronger board also clears rounds faster.")
+        hp, streak, lost = None, 0, 0
 
     # 1. stabilise first: early 3★ boards (Solar, Riftbeast) end games from ~20 HP, so this starts at
     #    45 HP from 3-1 — and after any round that cost 15+ HP, whatever's left. Not on a win streak:
@@ -130,7 +147,7 @@ def advise(econ, round_, plan, progress=None):
         prog = progress or []
         tally = " · ".join(f"{u} {min(n, 9)}/9" for u, n in prog)
         m = re.search(r"(\d)-cost", style)
-        cut = CHASE_UNTIL.get(int(m.group(1))) if m else None
+        cut = CHASE_UNTIL.get(int(m.group(1))) if m and not tockers else None  # Tocker's: nobody takes copies
         if prog and not all(n >= 9 for _, n in prog) and cut and st >= cut:
             if level_cost is not None and gold >= level_cost:
                 return (f"Stop the 3★ chase: level up ({level_cost}g → Lv {level + 1})",
@@ -164,7 +181,7 @@ def advise(econ, round_, plan, progress=None):
         return ("Save for the level", f"Need {level_cost}g to hit Lv {level + 1} (plan: Lv {tgt} by {round_}).")
 
     # 5. level/fast 9 comps at their roll-down level, stage 4+
-    if not reroll and rl and level >= rl and st >= (4, 1) and gold >= 30:
+    if not reroll and rl and level >= rl and st >= ((2, 10) if tockers else (4, 1)) and gold >= 30:
         return ("Roll down now", f"Lv {level} is this comp's roll level — find the 2★ carries.")
 
     # 6. win streak: push levels to stay ahead

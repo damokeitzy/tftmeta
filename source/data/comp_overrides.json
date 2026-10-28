@@ -1,5 +1,5 @@
 {
- "_about": "Per-comp overrides by base name (before ' — '). max_tier caps the tier (data tiers can't see emblem/augment/artifact dependence); needs is shown on the comp card; must adds must-have items per carry (an asterisk in the item builds).",
+ "_about": "Per-comp overrides by base name (before ' — '). max_tier caps the tier (data tiers can't see emblem/augment/artifact dependence); needs is shown on the comp card; must adds must-have items per carry (an asterisk in the item builds); ignore_conditions drops the guide's '*' condition (no B cap); hide: true never suggests or lists it (still used to read opponents).",
  "Veigar Reroll": {
   "max_tier": "B",
   "needs": "Consuming Flora emblem; lots of contested 1–2 costs"
@@ -37,5 +37,25 @@
    ]
   },
   "note": "Your read: Guinsoo's is a must-have on Azir (bunnymuffins only marks Gunblade)."
+ },
+ "Adaptor Reroll": {
+  "ignore_conditions": true,
+  "note": "Your read: the 2 Recurve Bows are easy to get, and it's one of your strongest boards (600k+ in Tocker's) — not capped at B."
+ },
+ "Riftbeast Reroll": {
+  "hide": true,
+  "note": "Your call (2026-10-24): never suggest Riftbeast builds."
+ },
+ "Tempo Riftbeast": {
+  "hide": true,
+  "note": "Your call (2026-10-24): never suggest Riftbeast builds."
+ },
+ "Riftbeast Brambleback": {
+  "hide": true,
+  "note": "Your call (2026-10-24): never suggest Riftbeast builds."
+ },
+ "10 Riftbeast": {
+  "hide": true,
+  "note": "Your call (2026-10-24): never suggest Riftbeast builds."
  }
 }

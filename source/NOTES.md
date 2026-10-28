@@ -161,10 +161,23 @@ down its left side; underneath, the guide's item builds (left) and pick / pivot 
   buys), a guide-sized flashing hexagon with the champion and "BUY name" (×2 when two are up), in a row in the
   middle of your board — where you're looking while you do items and your board, so a buy isn't missed. Only the
   hexagons show, clicks go straight through (you can still drag units and scout); `"shop_popup_at": "right"` in
-  config.json stacks them over the player list instead,
+  config.json stacks them over the player list instead, and they're hidden during combat: from the moment TFT's "Combat" banner shows (or 30 s into the round at the
+  latest; `"planning_s"` in config.json). From level 8 they only show 4- and 5-costs, and when
+  you're one or two copies off a 3★ 4/5-cost (7–8 held) only that champion shows (here and on the board) so the
+  gold waits for it. They sit in a row across the top of the arena (the enemy's half, empty while you plan),
   and it's hidden from screen capture so the readers never see it. A unit stops flashing (here and on the board)
   once you've bought enough: 3 copies (2★), or 9 if the build's guide has it at 3★. Needs TFT in borderless / windowed mode;
   `"shop_popup": false` in config.json turns it off.
+- Copies you hold (2026-10-24): purchases alone missed carousel / orb / augment copies (8 Kog'Maw counted as 4).
+  The shop card now fills that in: when buying a card completes a star-up, TFT puts stars at the left end of its
+  top edge (★★ = you hold two 1★, ★★★ = two 2★ and two 1★, i.e. 8 copies; dimmed, not gone, when you can't afford
+  it). Every shop read template-matches them (~0.2 ms): ★★★ → 8 held, ★★ → 2 (5 once you've bought 3+),
+  purchases after that add on, and the ★★★ gone from that champion's card means the 9th landed. Copies held =
+  the larger of that and your purchases (`ShopLogger.copies()`), used for the 7–8 rule, "bought enough", the HOLD
+  line and 3★ progress. Checked on the one real marker in the fixtures (Teemo ★★, pc_live4) and on ★★/★★★
+  pasted dim, bright and gold onto every other card; no real ★★★ screenshot yet — save a report (⚑) when you
+  see one. The star badge on each unit's health bar (bronze `<|` 1★, silver diamond 2★, gold double chevron 3★)
+  is easy to read, but nothing on screen says which champion a unit is, so it can't give per-champion counts.
 - Your HP: a read that jumps (51 → 3 → 51) only counts once a second read agrees, so a misread can't flash
   "Stabilise".
 - Augments you took: read off the little box above the lamp on the left of your board. After each augment
@@ -211,6 +224,106 @@ down its left side; underneath, the guide's item builds (left) and pick / pivot 
 
 Screen pixels only: no memory reading, no handles to the game process, no input automation.
 
+## Tocker's Trials (PvE score runs)
+
+Tocker's is 30 rounds (1-1 to 3-10) with three lives and no streaks; income is interest plus each round's
+reward.
+
+**Scoring, from the game files** (Community Dragon `map22.bin` and `tft.stringtable`, read 2026-10-25): six
+score bonuses, each popping up as "<name> +X" when awarded: **Surviving Champs, Time Bonus, Star Levels, Gold
+Interest, Item Greed and Close Calls** (plus Bosses Defeated on the end screen). Score ranks start at 0, 100k,
+200k, 350k, 500k, 600k (your Legendary runs) and 800k. The point values aren't in the client files (the
+server sends each "+X"), so what Item Greed counts is still unknown: spare components on your bench didn't
+seem to trigger it, and unopened anvils are the next thing to test. Gold Interest does score, so the advice
+keeps 50 gold for interest and only spends it all on the last round, 3-10.
+
+- **Detected from the round number:** two rounds a lobby never has (1-5 to 1-10, or any x-8 to x-10) switch the
+  overlay to Tocker's for that game; the status line says "Tocker's". The round reader now reads x-10.
+- **Leveling in Tocker's rounds** (`plans.tockers_plan`): every build's plan is converted by style, e.g. a 3-cost
+  reroll goes Lv 5 at 2-1 (passive XP), 6 at 2-3, 7 at 2-6 and rolls there, 8 at 3-6. bunnymuffins' lobby
+  leveling isn't shown.
+- **Lives, not HP:** the HP number shows your lives (3 to start; rewards can add more, 4-5 seen), and the status line shows them ("Tocker's · 2 lives"). The
+  lobby HP and streak rules are off. After a lost life it says to roll for upgrades, and on the last life to roll
+  now. The 3★ chase never times out (nobody else takes copies). Interest scores, so it keeps the usual 50-gold
+  rules and only says to spend everything on the last round, 3-10.
+- **BUY popup:** cheap units still flash at level 8, because 3★s score.
+- **Tocker's builds:** `"mode": "tockers"` in custom_comps.json. They're only suggested in Tocker's (or when
+  pinned) but always in the menu. **Tocker's Kog'Maw Adaptor (score)** is your Kog'Maw Adaptor 4 board with six
+  3★ targets (Kog'Maw, Master Yi, Krug, Vi, Yorick, Gromp) and a Tocker's stage guide, from your 612k
+  Legendary run.
+- **METAsrc's Tocker's comps** (Set 18, 18.5, from the page you pasted on 2026-10-25), as Tocker's builds with
+  their own leveling and stage guides: Kayle & Aphelios (Inferno Lunar Rapidfire Solar), Spellweaver LeBlanc,
+  Azir Executioners, Solar Kayle & Xayah and Elderwood Ezreal. Items come from the closest guide builds;
+  positions for units those boards lack are a guess. METAsrc's "top 4" counts runs survived, not score, so
+  the letters follow your scores: **S Elderwood Ezreal (865k best, 825k, 769k, 769k on 2026-10-26)**, A Kog'Maw Adaptor (825k on
+  2026-10-26 with a life lost at 2-3 or 2-4, 612k), B Azir Executioners (567k), B Spellweaver LeBlanc (515k),
+  C Solar Kayle & Xayah (692k, 577k) and C Kayle & Aphelios (630k). 833k on 2026-10-27 (Legendary, your
+  second best) was a Kha'Zix + Elderwood Ezreal hybrid (Kha'Zix Reroll pinned; Elderwood 3, Executioner 3,
+  Lunar 3, Ravager 2, Flora Fatalis 2). It lost a life at 1-10 and spent a lot of gold rolling for Ezreal 3★. The two Kayle builds dropped from A to C on
+  2026-10-26: too weak early for Tocker's (your call), even with a Kayle 3★ reroll and early Guinsoo's.
+- **Item Greed** (your test, 2026-10-25): 2,500 per item: 1 glove gave 2,500 and 4 items gave 10k.
+  **It pays every round** (score read off the 800k run's screenshots, 2026-10-26). With items held on the bench
+  the run scored about 36k per round (1-2 to 2-5); with them equipped, about 21k per round (2-5 to 3-10). One
+  popup read "Item Greed +20,000" at 1-9, which is 8 items. Other popups seen: Round Won +10,000, Gold Interest
+  +1,000 per interest gold (+4,000 at 3-10), Champ Star Level +1,000 / +2,000, Surviving Damage +250 / +1,750,
+  Time Bonus +300 to +2,200. So every spare item left on the bench from 2-5 to 3-10 is worth about 37k
+  (2,500 × 15 rounds). The way past 900k is to equip only what the board needs and keep the rest on the bench.
+- **KEEP / EQUIP line** (`greed.py`, side panel, Tocker's only): above the bench and gold lines. "KEEP" shows your
+  bench items' icons and "8 × 2,500 = 20,000 a round · equip from 2-5". From 2-5, "EQUIP" names the few items
+  the board needs, made from what's on your bench, with the score the rest keeps ("≈160k by 3-10"). What
+  counts as needed: nothing before 2-5; then the main tank's and the main carry's first guide item; 2 each
+  from 3-1; full builds from 3-6. Elderwood example at 2-5: Protector's Vow on Hecarim, Last Whisper on
+  Ezreal, keep the other 4. Items already on a champion count toward it.
+- **Enemy-board screenshots** (`tockershots.py`): Set 18's Tocker's enemy lineups aren't in any readable game
+  file. Community Dragon's `map22.bin` has the 30-round lineups for Sets 13–17 only, and the standalone client's
+  files are encrypted. So the overlay screenshots every Tocker's round into `data/tockers/<run>/`. It takes a
+  "planning" shot 2s in, a "fight" shot 1s after the Combat banner and a "midfight" shot 8s after it. If no
+  banner was read by 25s, it takes one "late" shot instead. A `shots.json` records each shot's round, lives,
+  level, gold and your traits. Shots are kept until the mode is known, and a lobby game deletes its folder at
+  3-1 (by then Tocker's has shown 2-8 to 2-10). A restart in stage 1 starts a new folder. The first version
+  decided at 2-1, which wrongly deleted the whole 769k Elderwood run on 2026-10-26: the round reader never read
+  Tocker's stage-1 rounds. Tocker's wider top bar puts the round label right at the crop's left edge, and the
+  text detector missed it there. `read_round` now pads the crop by 16px; your lobby screenshots still read the
+  same. Only the newest 8 runs are kept (`"tockers_shots_keep"`), each
+  about 30 MB. `"tockers_shots": false` in config.json turns it off. In Tocker's the Combat banner is looked for
+  from 3s into the round instead of 8s, since there's no planning timer. Hand a run's folder to Claude to get
+  each round's enemies, star levels, HP and damage.
+- **Round by round** (first full capture, 2026-10-26, `data/tockers/20261026-182036/rounds.md`): enemies carry no
+  items or one through stage 1, 2 from 2-1, a full 3-item Ahri at 2-3, and 2★ enemies with 3 items in every
+  round from 2-6. Lives went at 1-9 (14 flaming archers), 2-3 or 2-4 (2-4 is the Elise round: a life in both
+  captured runs), 3-2 or 3-3 (3-3 is Inferno, whose Wound cuts healing by 33%), and the 3-10 dragon boss. So
+  hold items through stage 1 and have them on before 2-3. The swarm rounds (1-9, 3-6's 10 Dravens, 3-9's wolf
+  pack) need damage that hits many units at once and extra bodies more than items.
+- **Lag fix** (2026-10-26, you felt the game lagging; the overlay used about 1.2 CPU cores throughout). The cause was
+  the "re-read when something changes" check, which watched the augment cards in the middle of the board. Units are
+  always moving there, so it ran a full screen read every 1.5s, in fights too. Now there are no change-driven reads
+  during a fight. The augment area is watched only on augment rounds (2-1, 3-2, 4-2). The opponent scout is off in
+  Tocker's (no opponents). The Combat banner is checked every 0.8s instead of every loop. In Tocker's, planning
+  lasts until the fight starts (no 30s limit).
+- **Pause logger** (`pauselog.py`, Tocker's fights): every 2s of each fight, a line in `data/tockers/<run>/
+  fights.jsonl` with the fight clock, % of the board that moved, the overlay's longest loop (`overlay_ms`), its CPU
+  (`overlay_cpu`, % of one core) and the PC's CPU (`pc_cpu`). A sample is marked `"freeze": "clock"` when the clock
+  didn't move in 2s (the game client or your PC froze). It's marked `"freeze": "board"` when the clock ran but
+  nothing moved (the fight stalled on the server's side). A big `overlay_ms` at the same moment means the
+  overlay was busy. Costs about 33 ms every 2s. `"tockers_pause_log": false` turns it off.
+- **Overlay went quiet mid-run** (2026-10-27): it stopped reading 7s into the Riftbeast run at 1-3, and after 1-2 in
+  the 20:47 run. Nothing was logged and the cause wasn't found. Two changes:
+  - **Window pick** (`capture.py`): the overlay used to take the first window titled "TFT" / "League of Legends (TM)
+    Client". A minimised or tiny second match would leave it "Waiting for TFT window…" all game. It now takes the
+    largest window that isn't minimised; on a tie, the topmost.
+  - **Watchdog** (`watchdog.py`): all of these go to `data/overlay_errors.log`.
+    - If the read loop doesn't come round for 30s: "overlay stalled", every thread's stack, then "recovered after
+      Ns".
+    - If a call holds the interpreter lock so the watcher can't run, faulthandler dumps the stacks after 90s under
+      "Timeout (0:01:30)!".
+    - Mid-game, the game window gone 15s, and when it comes back: the windows it could see.
+    - The round label unreadable for 60s: the crop is saved to `data/round_unread.png`.
+    - ❚❚ / ▶ pressed.
+    - A game ending also logs one "window gone" line, and the end screen one "unreadable" line; those are normal.
+- **Riftbeast doesn't work in Tocker's** (your runs): earlier runs fell off before 2-5 and didn't beat the Elise
+  round. The one that finished scored 750,900 (2026-10-27) with 12 units on the board, about 115k under the Elderwood
+  best. Don't use it as the no-item build.
+
 ## Exact comps from teamfight.lol
 
 **Kept up to date automatically:** every time the overlay starts it runs
@@ -252,9 +365,11 @@ its best augments. Max mode draws that board; item advice uses exactly those ite
 a standard timeline per comp style (teamfight.lol doesn't publish leveling). A carry holding
 3 items counts as finished even if you built different items.
 
-## More builds from TFT Academy
+## More builds from TFT Academy (dropped 2026-10-24)
 
-After the bunnymuffins sync, startup also runs `py tools/import_tftacademy.py --sync`: TFT Academy's tier list
+**No longer used** — your call: too many gimmicky capped final boards and emblem builds. Startup no longer syncs it and its builds aren't loaded (`OTHER_GUIDES = []` in `gamedata.py`); your own builds keep the openers they copied from it. What it did:
+
+After the bunnymuffins sync, startup also ran `py tools/import_tftacademy.py --sync`: TFT Academy's tier list
 (tftacademy.com/tierlist/comps, written by pro players) — its public **S and A** builds, with their exact board,
 items, 3★ units, style, augments and stage tips, into `data/comps_tftacademy.json` (rewritten by every sync;
 put your own builds in `custom_comps.json`). They show as "Name — TFT Academy". Lower tiers aren't imported:
@@ -318,6 +433,11 @@ that's newer than `data/game_data_version.json`, it downloads the dump (`data/cd
 kept as `cdragon_tft.prev.json`), takes the newest standard set (`TFTSetNN`), and redoes `set.json` + champion
 icons, items + item icons, this set's augment names / descriptions and augment icons. The overlay then restarts
 itself on the new data (status: "New patch: … — restarting…"); the guide and SeeMeta syncs follow.
+
+**Radiant items** (`data/radiant.json`, made by `tools/fetch_items.py` with the other item data) have their own
+icons. The item reader matches them by those icons and reports each as the item it upgrades, so a Radiant
+Deathblade finishes Deathblade. Before 2026-10-26 a Radiant item on a unit didn't match anything. Its unit's items
+were dropped from the read, and the overlay kept saying to build an item you already had.
 
 By hand, same thing: `py tools/update_game_data.py --sync` (without `--sync` it only says whether there's a
 newer patch). Builds come from the guides' own syncs; your own go in `data/custom_comps.json`.

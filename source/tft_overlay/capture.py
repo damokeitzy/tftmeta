@@ -19,7 +19,9 @@ except Exception:
     user32.SetProcessDPIAware()
 
 
-def find_game_window():
+def game_windows():
+    """[(hwnd, title, minimised, client width, client height)] for every visible window with a game title,
+    topmost first."""
     found = []
 
     @ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
@@ -28,11 +30,33 @@ def find_game_window():
             buf = ctypes.create_unicode_buffer(256)
             user32.GetWindowTextW(hwnd, buf, 256)
             if buf.value.strip() in GAME_WINDOW_TITLES:
-                found.append(hwnd)
+                rect = wintypes.RECT()
+                user32.GetClientRect(hwnd, ctypes.byref(rect))
+                found.append((hwnd, buf.value, bool(user32.IsIconic(hwnd)), rect.right, rect.bottom))
         return True
 
     user32.EnumWindows(visit, 0)
-    return found[0] if found else None
+    return found
+
+
+def pick_window(windows):
+    """The largest window that isn't minimised (ties: the topmost), else a minimised one, else None. The first
+    title match used to win: a second "TFT" window (minimised or tiny) could leave the overlay waiting all game
+    (2026-10-27, unconfirmed)."""
+    shown = [w for w in windows if not w[2]]
+    if shown:
+        return max(shown, key=lambda w: w[3] * w[4])[0]  # max keeps the first (topmost) of equal sizes
+    return windows[0][0] if windows else None
+
+
+def describe_windows():
+    """One line per game-titled window, for the error log when the game is lost."""
+    return [f"{title!r} {'minimised' if mini else f'{w}x{h}'}" for _, title, mini, w, h in game_windows()] or \
+        ["no visible window titled " + " / ".join(GAME_WINDOW_TITLES)]
+
+
+def find_game_window():
+    return pick_window(game_windows())
 
 
 def game_rect():

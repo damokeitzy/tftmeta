@@ -116,8 +116,9 @@ def real_results(comp, stats):
 
 
 # other guides' builds (their own syncs), next to bunnymuffins'. On a tie the guide listed first keeps the build.
-# (tftactics.gg was tried and dropped: most of its S/A builds don't hold up in ranked results)
-OTHER_GUIDES = ["comps_tftacademy.json"]
+# (tftactics.gg was tried and dropped: most of its S/A builds don't hold up in ranked results; TFT Academy was
+# dropped on 2026-10-24, your call: too many gimmicky capped / emblem boards. tools/import_tftacademy.py still works.)
+OTHER_GUIDES = []
 
 
 def _main(c):
@@ -213,6 +214,10 @@ def load_comps():
             c["data_tier"], c["tier"] = c["tier"], cap
         if o.get("needs"):
             c["needs"] = o["needs"]
+        if o.get("hide"):  # your call: never suggest it or list it (still used to read what opponents play)
+            c["hidden"] = True
+        if o.get("ignore_conditions"):  # your call: the guide's '*' condition is easy enough not to cap it at B
+            c["guide_req"] = []
         if o.get("note"):  # your own read on the comp, shown with its notes
             c["notes"] = (o["note"] + " " + c.get("notes", "")).strip()
     # real ranked results cap every guide's letter: a build shows S/A only when it finishes top 4 that often.

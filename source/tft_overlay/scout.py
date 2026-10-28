@@ -27,6 +27,15 @@ def norm(name):
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
 
+def _round_no(r):
+    """'4-2' -> 30 (7 rounds a stage), for comparing how many rounds ago a board was seen."""
+    try:
+        stage, n = r.split("-")
+        return int(stage) * 7 + int(n)
+    except (ValueError, AttributeError):
+        return 0
+
+
 class Scout:
     def __init__(self, reader, comps, champions, my_name=None):
         self.reader, self.comps, self.champions = reader, comps, champions
@@ -67,6 +76,15 @@ class Scout:
             return None  # your own board, or a combat (your legend is there too)
         found = {self._match(lab) for lab in labels} - {None}
         return self.lobby[found.pop()] if len(found) == 1 else None
+
+    def looks_like_mine(self, traits):
+        """Traits that are (nearly) your own: 80%+ of the units match. Read while the trait panel still showed
+        your board, or your board with its label hidden — never an opponent on your comp."""
+        mine = self.mine or {}
+        if not traits or not mine:
+            return False
+        shared = sum(min(traits.get(t, 0), mine.get(t, 0)) for t in set(traits) | set(mine))
+        return shared / max(sum(traits.values()), sum(mine.values())) >= 0.8
 
     def record(self, name, traits, round_):
         if traits and not self.is_me(name):
@@ -129,22 +147,25 @@ class Scout:
         if not name:
             return None
         traits = self.reader.read_traits(frame)
-        if traits and traits == self.mine:  # your own board with your label hidden, not theirs
+        if traits and self.looks_like_mine(traits):  # your board (the trait panel hadn't switched yet), not theirs
             self.on_opponent = None
             return None
         self.record(name, traits, round_)
         return name if traits else None
 
     # ---- contest -------------------------------------------------------------------------
-    def contest(self, comp, suggest):
+    def contest(self, comp, suggest, round_=None):
         """-> [(opponent, their likely comp, why)] for opponents on your comp or your main carry.
-        `suggest` is matcher.suggest bound to the comps/champions."""
-        main = next(iter(comp.get("carries") or {}), None)
+        `suggest` is matcher.suggest bound to the comps/champions. Only boards scouted in the last 5 rounds
+        count: people pivot."""
+        main = comp.get("main") or next(iter(comp.get("carries") or {}), None)
         base = comp["name"].split(" — ")[0]
         out = []
         for name, info in self.opponents.items():
-            if self.is_me(name):
+            if self.is_me(name) or self.looks_like_mine(info["traits"]):
                 continue
+            if round_ and info.get("round") and _round_no(round_) - _round_no(info["round"]) > 5:
+                continue  # seen too long ago: they may have moved on
             traits = info["traits"]
             # evidence, not a guess: enough units to tell what they're building, a confident fit,
             # and they can actually be fielding your carry (all its traits show on their board)
