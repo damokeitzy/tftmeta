@@ -1737,6 +1737,234 @@
    }
   },
   {
+   "name": "Tocker's Solar Kayle — Eclipse (score)",
+   "tier": "S",
+   "custom": true,
+   "mode": "tockers",
+   "source": "Your 870,250 Legendary run (Tocker's, 2026-10-28, no lives lost) on the Kayle Reroll — Eclipse guide board from teamfight.lol; items and positions from that guide.",
+   "units": [
+    "Ornn",
+    "Sejuani",
+    "Diana",
+    "Leona",
+    "Rakan",
+    "Aphelios",
+    "Xayah",
+    "Alune",
+    "Kayle"
+   ],
+   "board": [
+    {
+     "unit": "Ornn",
+     "pos": 5,
+     "three": true,
+     "items": [
+      "Gargoyle Stoneplate",
+      "Spirit Visage",
+      "Warmog's Armor"
+     ],
+     "prop": false,
+     "icon": "DA_18_Ornn.png"
+    },
+    {
+     "unit": "Sejuani",
+     "pos": 10,
+     "three": true,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Sejuani.png"
+    },
+    {
+     "unit": "Diana",
+     "pos": 11,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Diana.png"
+    },
+    {
+     "unit": "Leona",
+     "pos": 12,
+     "three": true,
+     "items": [
+      "Evenshroud",
+      "Sunfire Cape"
+     ],
+     "prop": false,
+     "icon": "DA_18_Leona.png"
+    },
+    {
+     "unit": "Rakan",
+     "pos": 15,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Rakan.png"
+    },
+    {
+     "unit": "Aphelios",
+     "pos": 22,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Aphelios.png"
+    },
+    {
+     "unit": "Xayah",
+     "pos": 26,
+     "three": true,
+     "items": [
+      "Guinsoo's Rageblade",
+      "Kraken's Fury",
+      "Kraken's Fury"
+     ],
+     "prop": false,
+     "icon": "DA_18_Xayah.png"
+    },
+    {
+     "unit": "Alune",
+     "pos": 27,
+     "three": false,
+     "items": [],
+     "prop": false,
+     "icon": "DA_18_Alune.png"
+    },
+    {
+     "unit": "Kayle",
+     "pos": 28,
+     "three": true,
+     "items": [
+      "Jeweled Gauntlet",
+      "Rabadon's Deathcap",
+      "Guinsoo's Rageblade"
+     ],
+     "prop": false,
+     "icon": "DA_18_Kayle.png"
+    }
+   ],
+   "carries": {
+    "Kayle": [
+     "Jeweled Gauntlet",
+     "Rabadon's Deathcap",
+     "Guinsoo's Rageblade"
+    ],
+    "Xayah": [
+     "Guinsoo's Rageblade",
+     "Kraken's Fury",
+     "Kraken's Fury"
+    ],
+    "Ornn": [
+     "Gargoyle Stoneplate",
+     "Spirit Visage",
+     "Warmog's Armor"
+    ],
+    "Leona": [
+     "Evenshroud",
+     "Sunfire Cape"
+    ]
+   },
+   "main": "Kayle",
+   "augments": [],
+   "notes": "Tocker's only. S: 870,250 on 2026-10-28, your best score (Elderwood Ezreal's best is 865k). Same nine as METAsrc's Solar Kayle & Xayah, with Alune in place of LeBlanc. That run: Lv 5 at 1-8, Lv 6 at 2-4, Lv 7 at 3-2, Lv 8 at 3-6, Lv 9 at 3-10; 55+ gold kept from 2-3, so interest paid every round; all three lives kept.",
+   "special_items_optional": true,
+   "early": [
+    {
+     "unit": "Leona",
+     "items": []
+    },
+    {
+     "unit": "Ornn",
+     "items": []
+    },
+    {
+     "unit": "Rakan",
+     "items": []
+    },
+    {
+     "unit": "Xayah",
+     "items": []
+    },
+    {
+     "unit": "Kayle",
+     "items": []
+    }
+   ],
+   "plan": {
+    "style": "Reroll (2-cost carry)",
+    "roll_at": "Level 6",
+    "when": "Tocker's (your 870k run): Lv 6 at 2-4 and roll only the gold above 50 for Kayle and Xayah 3★ (Kayle: Jeweled Gauntlet, Rabadon's, Guinsoo's; Xayah: Guinsoo's, Kraken's). Lv 7 at 3-2, Lv 8 at 3-6, Lv 9 at 3-10.",
+    "bail": "A lost round costs one of your three lives: after a loss, roll for upgrades before the next fight.",
+    "realistic": "Your run: 870,250 Legendary with no lives lost (2026-10-28). Score counts Surviving Champs, Time Bonus, Star Levels, Gold Interest, Item Greed and Close Calls, so keep 50+ gold until 3-10.",
+    "leveling": [
+     [
+      "1-8",
+      "Lv 5"
+     ],
+     [
+      "2-4",
+      "Lv 6 · roll above 50 for Kayle and Xayah 3★"
+     ],
+     [
+      "3-2",
+      "Lv 7"
+     ],
+     [
+      "3-6",
+      "Lv 8 · Aphelios, Alune"
+     ],
+     [
+      "3-10",
+      "Lv 9"
+     ]
+    ]
+   },
+   "howto": {
+    "gameplan": "Your 870k Tocker's board: Kayle and Xayah carry behind Ornn, Leona and Sejuani. Win fast, keep everyone alive and keep 50+ gold. Lives, not HP: three lost rounds end the run.",
+    "stages": [
+     [
+      "Stage 1",
+      "Passive XP to Lv 5 by 1-8. Buy every Kayle, Xayah, Leona, Ornn, Sejuani and Rakan."
+     ],
+     [
+      "Stage 2",
+      "Lv 6 at 2-4. From 2-3 keep 55+ gold and roll only the gold above 50 for Kayle and Xayah 3★. Ornn takes the tank items, Leona Evenshroud and Sunfire."
+     ],
+     [
+      "Stage 3",
+      "Lv 7 at 3-2, Lv 8 at 3-6 for Aphelios and Alune, Lv 9 at 3-10. Keep 50 gold for interest until the last round, 3-10."
+     ]
+    ],
+    "tips": [
+     "Three lives instead of 100 HP: each lost round costs one and three ends the run. After a loss, roll for upgrades before the next fight.",
+     "Item Greed pays 2,500 per held item every round: equip only what the board needs and leave spare items on the bench."
+    ],
+    "holders": "Kayle, Xayah, Ornn, Leona",
+    "emblem": "",
+    "items": [
+     [
+      "Kayle",
+      "Jeweled Gauntlet, Rabadon's Deathcap, Guinsoo's Rageblade",
+      []
+     ],
+     [
+      "Xayah",
+      "Guinsoo's Rageblade, Kraken's Fury, Kraken's Fury",
+      []
+     ],
+     [
+      "Ornn",
+      "Gargoyle Stoneplate, Spirit Visage, Warmog's Armor",
+      []
+     ],
+     [
+      "Leona",
+      "Evenshroud, Sunfire Cape",
+      []
+     ]
+    ]
+   }
+  },
+  {
    "name": "Tocker's Solar Kayle & Xayah (METAsrc)",
    "tier": "C",
    "custom": true,

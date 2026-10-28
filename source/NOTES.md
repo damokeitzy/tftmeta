@@ -250,17 +250,21 @@ keeps 50 gold for interest and only spends it all on the last round, 3-10.
 - **Tocker's builds:** `"mode": "tockers"` in custom_comps.json. They're only suggested in Tocker's (or when
   pinned) but always in the menu. **Tocker's Kog'Maw Adaptor (score)** is your Kog'Maw Adaptor 4 board with six
   3★ targets (Kog'Maw, Master Yi, Krug, Vi, Yorick, Gromp) and a Tocker's stage guide, from your 612k
-  Legendary run.
+  Legendary run. **Tocker's Solar Kayle — Eclipse (score)** is S: your best score, 870,250 on 2026-10-28, on
+  the Kayle Reroll — Eclipse guide board (Kayle, Xayah, Ornn, Leona, Sejuani, Rakan, Diana, Aphelios, Alune)
+  with no lives lost. Its stage guide follows that run: Lv 6 at 2-4, 7 at 3-2, 8 at 3-6, 9 at 3-10, 55+ gold
+  from 2-3.
 - **METAsrc's Tocker's comps** (Set 18, 18.5, from the page you pasted on 2026-10-25), as Tocker's builds with
   their own leveling and stage guides: Kayle & Aphelios (Inferno Lunar Rapidfire Solar), Spellweaver LeBlanc,
   Azir Executioners, Solar Kayle & Xayah and Elderwood Ezreal. Items come from the closest guide builds;
   positions for units those boards lack are a guess. METAsrc's "top 4" counts runs survived, not score, so
   the letters follow your scores: **S Elderwood Ezreal (865k best, 825k, 769k, 769k on 2026-10-26)**, A Kog'Maw Adaptor (825k on
   2026-10-26 with a life lost at 2-3 or 2-4, 612k), B Azir Executioners (567k), B Spellweaver LeBlanc (515k),
-  C Solar Kayle & Xayah (692k, 577k) and C Kayle & Aphelios (630k). 833k on 2026-10-27 (Legendary, your
-  second best) was a Kha'Zix + Elderwood Ezreal hybrid (Kha'Zix Reroll pinned; Elderwood 3, Executioner 3,
+  C Solar Kayle & Xayah (692k, 577k) and C Kayle & Aphelios (630k). 833k on 2026-10-27 (Legendary, now your
+  third best) was a Kha'Zix + Elderwood Ezreal hybrid (Kha'Zix Reroll pinned; Elderwood 3, Executioner 3,
   Lunar 3, Ravager 2, Flora Fatalis 2). It lost a life at 1-10 and spent a lot of gold rolling for Ezreal 3★. The two Kayle builds dropped from A to C on
-  2026-10-26: too weak early for Tocker's (your call), even with a Kayle 3★ reroll and early Guinsoo's.
+  2026-10-26: too weak early for Tocker's (your call), even with a Kayle 3★ reroll and early Guinsoo's. The
+  Eclipse version with Alune instead of LeBlanc then set the best score (870,250, above).
 - **Item Greed** (your test, 2026-10-25): 2,500 per item: 1 glove gave 2,500 and 4 items gave 10k.
   **It pays every round** (score read off the 800k run's screenshots, 2026-10-26). With items held on the bench
   the run scored about 36k per round (1-2 to 2-5); with them equipped, about 21k per round (2-5 to 3-10). One
